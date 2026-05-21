@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Story — Fahrenheit 451</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ─── PAGE VARIABLES ─── */
+    :root {
+      --transition-spring: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ─── HERO ─── */
+    .story-hero {
+      background: var(--surface-dark);
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 6rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(196, 57, 15, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .story-hero__eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .story-hero__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 700;
+      color: var(--text-inverse);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 820px;
+      margin-bottom: 1.5rem;
+    }
+
+    .story-hero__title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .story-hero__subtitle {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      font-weight: 300;
+      color: rgba(232, 228, 220, 0.65);
+      max-width: 560px;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      margin-bottom: 4rem;
+    }
+
+    /* ─── HERO TIMELINE ─── */
+    .story-timeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .story-timeline__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .story-timeline__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .story-timeline__label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(232, 228, 220, 0.5);
+      white-space: nowrap;
+    }
+
+    .story-timeline__line {
+      width: 80px;
+      height: 1px;
+      background: rgba(196, 57, 15, 0.35);
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 600px) {
+      .story-timeline__line { width: 40px; }
+    }
+
+    /* ─── CHAPTER SECTIONS SHARED ─── */
+    .story-chapter {
+      position: relative;
+      padding: 8rem 2rem;
+      overflow: hidden;
+    }
+
+    .story-chapter__num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(8rem, 20vw, 16rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      position: absolute;
+      top: 3rem;
+      pointer-events: none;
+      user-select: none;
+      will-change: transform;
+    }
+
+    .story-chapter__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .story-chapter__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+
+    .story-chapter__tagline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+
+    .story-chapter__body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .story-chapter__body p {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+      font-weight: 300;
+      line-height: 1.8;
+      letter-spacing: 0.01em;
+      max-width: 620px;
+    }
+
+    .story-pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      font-style: italic;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      padding: 1.5rem 0;
+      margin: 1rem 0;
+      max-width: 560px;
+    }
+
+    .story-pull-quote cite {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-style: normal;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 0.75rem;
+      opacity: 0.6;
+    }
+
+    /* ─── PART I ─── */
+    .story-part-i {
+      background: var(--bg);
+    }
+
+    .story-part-i .story-chapter__num {
+      color: var(--text);
+      opacity: 0.06;
+      left: -2rem;
+    }
+
+    .story-part-i .story-chapter__inner {
+      grid-template-columns: 2fr 3fr;
+      align-items: start;
+    }
+
+    .story-part-i .story-chapter__title {
+      color: var(--text);
+    }
+
+    .story-part-i .story-chapter__tagline {
+      color: var(--text-muted);
+    }
+
+    .story-part-i .story-chapter__body p {
+      color: var(--text);
+    }
+
+    .story-part-i .story-pull-quote {
+      color: var(--text);
+    }
+
+    .story-part-i .story-left {
+      padding-top: 2rem;
+    }
+
+    @media (max-width: 860px) {
+      .story-part-i .story-chapter__inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ─── PART II ─── */
+    .story-part-ii {
+      background: var(--surface);
+    }
+
+    .story-part-ii .story-chapter__num {
+      color: var(--text);
+      opacity: 0.06;
+      right: -2rem;
+      left: auto;
+    }
+
+    .story-part-ii .story-chapter__inner {
+      grid-template-columns: 1fr 3fr;
+      align-items: start;
+      direction: ltr;
+    }
+
+    .story-part-ii .story-chapter__title {
+      color: var(--text);
+    }
+
+    .story-part-ii .story-chapter__tagline {
+      color: var(--text-muted);
+    }
+
+    .story-part-ii .story-chapter__body p {
+      color: var(--text);
+    }
+
+    .story-part-ii .story-pull-quote {
+      color: var(--text);
+    }
+
+    .story-part-ii .story-right {
+      order: 2;
+    }
+
+    .story-part-ii .story-deco {
+      order: 1;
+    }
+
+    @media (max-width: 860px) {
+      .story-part-ii .story-chapter__inner {
+        grid-template-columns: 1fr;
+      }
+      .story-part-ii .story-deco { display: none; }
+    }
+
+    /* Decorative CSS-only visual for Part II */
+    .story-deco {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 3rem;
+    }
+
+    .story-deco__ring-wrap {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      flex-shrink: 0;
+    }
+
+    .story-deco__ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(196, 57, 15, 0.25);
+    }
+
+    .story-deco__ring:nth-child(1) {
+      transform: scale(1);
+      animation: ring-breathe 4s ease-in-out infinite;
+    }
+    .story-deco__ring:nth-child(2) {
+      transform: scale(0.72);
+      border-color: rgba(196, 57, 15, 0.4);
+      animation: ring-breathe 4s ease-in-out 0.6s infinite;
+    }
+    .story-deco__ring:nth-child(3) {
+      transform: scale(0.44);
+      border-color: rgba(196, 57, 15, 0.6);
+      animation: ring-breathe 4s ease-in-out 1.2s infinite;
+    }
+    .story-deco__ring:nth-child(4) {
+      transform: scale(0.18);
+      background: var(--accent);
+      border: none;
+      opacity: 0.7;
+    }
+
+    @keyframes ring-breathe {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    .story-deco__label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      font-style: italic;
+      color: var(--text-muted);
+      text-align: center;
+      white-space: nowrap;
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── PART III ─── */
+    .story-part-iii {
+      background: var(--surface-dark);
+      text-align: center;
+    }
+
+    .story-part-iii .story-chapter__num {
+      color: #fff;
+      opacity: 0.04;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 1rem;
+    }
+
+    .story-part-iii .story-chapter__inner {
+      grid-template-columns: 1fr;
+      max-width: 740px;
+    }
+
+    .story-part-iii .story-chapter__title {
+      color: var(--text-inverse);
+    }
+
+    .story-part-iii .story-chapter__tagline {
+      color: rgba(232, 228, 220, 0.5);
+    }
+
+    .story-part-iii .story-chapter__body p {
+      color: rgba(232, 228, 220, 0.75);
+      max-width: 100%;
+    }
+
+    .story-part-iii .story-pull-quote {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      margin: 1rem auto;
+      text-align: left;
+    }
+
+    .story-part-iii .story-pull-quote cite {
+      color: rgba(232, 228, 220, 0.4);
+    }
+
+    /* ─── SYMBOLS SECTION ─── */
+    .story-symbols {
+      background: var(--bg);
+      padding: 8rem 2rem;
+      text-align: center;
+    }
+
+    .story-symbols__heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 5rem;
+    }
+
+    .story-symbols__grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr 1fr;
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto 5rem;
+      align-items: end;
+    }
+
+    @media (max-width: 640px) {
+      .story-symbols__grid {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+    }
+
+    .story-symbol {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 2.5rem 1.5rem;
+      border: 1px solid rgba(44, 44, 44, 0.1);
+      transition: border-color 300ms var(--transition-spring),
+                  transform 300ms var(--transition-spring);
+    }
+
+    .story-symbol:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .story-symbol--mid {
+      padding: 4rem 1.5rem;
+    }
+
+    .story-symbol__word {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .story-symbol__label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .story-symbol__desc {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+      letter-spacing: 0.01em;
+      max-width: 200px;
+    }
+
+    /* ─── PAGE NAV ─── */
+    .story-pagenav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      padding-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .story-pagenav__link {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 44px;
+      padding: 0.5rem 0;
+      transition: color 200ms ease, gap 200ms var(--transition-spring);
+    }
+
+    .story-pagenav__link:hover {
+      color: var(--accent);
+      gap: 0.85rem;
+    }
+
+    .story-pagenav__divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(44, 44, 44, 0.2);
+    }
+
+    .reveal--delay-1 { transition-delay: 120ms; }
+    .reveal--delay-2 { transition-delay: 240ms; }
+    .reveal--delay-3 { transition-delay: 360ms; }
+
+    /* ─── SCROLL PROGRESS ─── */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: var(--accent);
+      z-index: 9999;
+      width: 0%;
+      transition: width 100ms linear;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav" id="mainNav">
+    <a href="index.html" class="nav__logo">F<span>°</span>451</a>
+    <ul class="nav__links">
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="story.html" class="nav__link">The Story</a></li>
+      <li><a href="characters.html" class="nav__link">Characters</a></li>
+      <li><a href="themes.html" class="nav__link">Themes</a></li>
+      <li><a href="books.html" class="nav__link">The Books</a></li>
+    </ul>
+    <button class="nav__hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav__overlay" id="navOverlay" aria-hidden="true">
+    <ul>
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="story.html" class="nav__link">The Story</a></li>
+      <li><a href="characters.html" class="nav__link">Characters</a></li>
+      <li><a href="themes.html" class="nav__link">Themes</a></li>
+      <li><a href="books.html" class="nav__link">The Books</a></li>
+    </ul>
+  </div>
+
+  <main id="main-content">
+
+    <!-- ─── HERO ─── -->
+    <section class="story-hero">
+      <p class="story-hero__eyebrow reveal">The Story</p>
+      <h1 class="story-hero__title reveal reveal--delay-1">Three Parts. <em>One Awakening.</em></h1>
+      <p class="story-hero__subtitle reveal reveal--delay-2">From fireman to fugitive — Guy Montag's transformation across Bradbury's three-act structure.</p>
+
+      <div class="story-timeline reveal reveal--delay-3" aria-label="Three-part structure">
+        <div class="story-timeline__item">
+          <div class="story-timeline__dot"></div>
+          <span class="story-timeline__label">Part I</span>
+        </div>
+        <div class="story-timeline__line" aria-hidden="true"></div>
+        <div class="story-timeline__item">
+          <div class="story-timeline__dot"></div>
+          <span class="story-timeline__label">Part II</span>
+        </div>
+        <div class="story-timeline__line" aria-hidden="true"></div>
+        <div class="story-timeline__item">
+          <div class="story-timeline__dot"></div>
+          <span class="story-timeline__label">Part III</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── PART I ─── -->
+    <section class="story-chapter story-part-i" aria-labelledby="part1-title">
+      <span class="story-chapter__num" aria-hidden="true">I</span>
+
+      <div class="story-chapter__inner">
+
+        <div class="story-left">
+          <h2 class="story-chapter__title reveal" id="part1-title">The Hearth and the Salamander</h2>
+          <p class="story-chapter__tagline reveal reveal--delay-1">In which a fireman meets a girl who asks dangerous questions.</p>
+        </div>
+
+        <div class="story-right story-chapter__body">
+          <p class="reveal">Guy Montag is a fireman — not the kind who puts out fires, but the kind who starts them. In a future America, books are banned and burned on sight. Montag takes pride in his work, returning home each night to a wife who is sedated on government-approved television. He has never questioned his life. He is, by all measures, content.</p>
+          <p class="reveal reveal--delay-1">That changes when he meets seventeen-year-old Clarisse McClellan, his new neighbor. She is strange in every way that matters: she notices the world, she asks questions, she tastes rain. Their brief walks together plant something uncomfortable in Montag's chest. "Are you happy?" she asks him one night, and the question follows him home like smoke.</p>
+          <p class="reveal reveal--delay-2">The crisis arrives when Montag's crew is called to burn a woman's house. She refuses to leave her books. <span class="redacted">The woman chose the flames</span> over surrender — she stays and burns with them. It is the first time Montag has watched someone die for an idea, and it is the last time he can pretend not to care.</p>
+
+          <blockquote class="story-pull-quote reveal reveal--delay-3">
+            <span data-split>"Are you happy?"</span>
+            <cite>— Clarisse McClellan</cite>
+          </blockquote>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── PART II ─── -->
+    <section class="story-chapter story-part-ii" aria-labelledby="part2-title">
+      <span class="story-chapter__num" aria-hidden="true">II</span>
+
+      <div class="story-chapter__inner">
+
+        <div class="story-deco" aria-hidden="true">
+          <div class="story-deco__ring-wrap">
+            <div class="story-deco__ring"></div>
+            <div class="story-deco__ring"></div>
+            <div class="story-deco__ring"></div>
+            <div class="story-deco__ring"></div>
+            <span class="story-deco__label">the sieve<br>never fills</span>
+          </div>
+        </div>
+
+        <div class="story-right">
+          <h2 class="story-chapter__title reveal" id="part2-title">The Sieve and the Sand</h2>
+          <p class="story-chapter__tagline reveal reveal--delay-1">In which a fireman begins to question everything.</p>
+
+          <div class="story-chapter__body" style="margin-top: 1.5rem;">
+            <p class="reveal">Montag has been secretly stealing books from the houses he burns. His apartment walls hold a growing cache of contraband. Overwhelmed and unable to comprehend what he reads, he reaches out to Faber — a retired English professor he once encountered in a park — and begs for guidance. Faber agrees, slipping a tiny earpiece to Montag so he can whisper instruction from a safe distance.</p>
+            <p class="reveal reveal--delay-1">But the walls are closing in. Montag's wife Mildred, who spends her days immersed in interactive television, has already noticed the books. Her parlor-wall friends mean more to her than her own husband. She reports him — quietly, matter-of-factly, as if turning in a stranger. Montag's own captain, Beatty, arrives at the house already knowing, already gloating.</p>
+            <p class="reveal reveal--delay-2"><span class="redacted">Montag turns the flamethrower on Beatty</span> and watches him burn. It is not murder to him in that moment — it is the only language left. He flees into the city as an alarm goes out, a fireman on the run from the very system he served.</p>
+
+            <blockquote class="story-pull-quote reveal reveal--delay-3">
+              <span data-split>"We must all be alike. Not everyone born free and equal, as the Constitution says, but everyone made equal."</span>
+              <cite>— Captain Beatty</cite>
+            </blockquote>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── PART III ─── -->
+    <section class="story-chapter story-part-iii" aria-labelledby="part3-title">
+      <span class="story-chapter__num" aria-hidden="true">III</span>
+
+      <div class="story-chapter__inner">
+        <div>
+          <h2 class="story-chapter__title reveal" id="part3-title">Burning Bright</h2>
+          <p class="story-chapter__tagline reveal reveal--delay-1">In which fire becomes salvation.</p>
+        </div>
+
+        <div class="story-chapter__body">
+          <p class="reveal">Montag escapes through the city's river — literally washing himself clean of the life he's led. The authorities release a mechanical hound to track him, broadcasting the hunt live on every screen in the nation. But Montag makes it to the outskirts of civilization, where he finds something he never expected: other people walking the same direction.</p>
+          <p class="reveal reveal--delay-1">These are the Book People — a loose network of exiles, each one a living library. They have memorized entire texts to preserve them until the world is ready again. One carries Plato. Another, Jonathan Swift. <span class="redacted">Montag carries within him the Book of Ecclesiastes</span>, its words now inseparable from his own memory.</p>
+          <p class="reveal reveal--delay-2">Then the bombs fall. The war that had been rumored in the background throughout the novel arrives in a single, annihilating moment. The city — Mildred, Beatty, the parlor walls, all of it — is gone. What remains is Montag and the Book People, walking toward the ruins, carrying the only things worth carrying.</p>
+
+          <blockquote class="story-pull-quote reveal reveal--delay-3">
+            <span data-split>"And when it came his turn, what had he to offer?"</span>
+            <cite>— Ray Bradbury, Fahrenheit 451</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SYMBOLS ─── -->
+    <section class="story-symbols reveal" aria-labelledby="symbols-heading">
+      <h2 class="story-symbols__heading" id="symbols-heading">The Three Symbols</h2>
+
+      <div class="story-symbols__grid">
+
+        <article class="story-symbol reveal reveal--delay-1">
+          <span class="story-symbol__word">Fire</span>
+          <span class="story-symbol__label">Destruction &amp; Renewal</span>
+          <p class="story-symbol__desc">The tool of oppression that becomes an act of liberation. Montag ends the story by fire — and is reborn through it.</p>
+        </article>
+
+        <article class="story-symbol story-symbol--mid reveal">
+          <span class="story-symbol__word">Books</span>
+          <span class="story-symbol__label">The Weight of Memory</span>
+          <p class="story-symbol__desc">Not objects but vessels of accumulated human experience. To burn them is not to erase ideas — only to make them harder to find.</p>
+        </article>
+
+        <article class="story-symbol reveal reveal--delay-2">
+          <span class="story-symbol__word">Water</span>
+          <span class="story-symbol__label">The Quiet Aftermath</span>
+          <p class="story-symbol__desc">Montag escapes through the river. Water is the counterforce to fire — it cleanses, it carries, it gives passage to what must survive.</p>
+        </article>
+
+      </div>
+
+      <nav class="story-pagenav" aria-label="Page navigation">
+        <a href="index.html" class="story-pagenav__link">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;" aria-hidden="true"></i>
+          Back to Home
+        </a>
+        <div class="story-pagenav__divider" aria-hidden="true"></div>
+        <a href="characters.html" class="story-pagenav__link">
+          Meet the Characters
+          <i data-lucide="arrow-right" style="width:16px;height:16px;" aria-hidden="true"></i>
+        </a>
+      </nav>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <p class="footer__logo">F<span>°</span>451</p>
+        <p class="footer__quote">"A book is a loaded gun<br>in the house next door."</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="index.html" class="footer__link">Home</a>
+        <a href="story.html" class="footer__link">The Story</a>
+        <a href="characters.html" class="footer__link">Characters</a>
+        <a href="themes.html" class="footer__link">Themes</a>
+        <a href="books.html" class="footer__link">The Books</a>
+      </nav>
+      <p class="footer__copy">Fahrenheit 451 — Ray Bradbury, 1953 · Companion Site</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@latest/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="script.js"></script>
+  <script>if (typeof lucide !== 'undefined') lucide.createIcons();</script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+      document.querySelectorAll('.story-chapter__num').forEach(num => {
+        gsap.to(num, {
+          y: -60,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: num.closest('.story-chapter'),
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+      });
+
+      // Scroll progress bar
+      const progressBar = document.getElementById('scrollProgress');
+      if (progressBar) {
+        window.addEventListener('scroll', () => {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          progressBar.style.width = pct + '%';
+        }, { passive: true });
+      }
+    });
+  </script>
+
+</body>
+</html>

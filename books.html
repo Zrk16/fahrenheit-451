@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Forbidden Library — Fahrenheit 451</title>
+  <meta name="description" content="451° — the temperature at which paper burns. Twelve books sentenced to ash. You decide what survives." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ─── Page Hero ─────────────────────────────────────────── */
+    .page-hero--books {
+      min-height: 100vh;
+      background: var(--redact);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: var(--space-xl) var(--space-lg);
+    }
+
+    .page-hero--books__content {
+      max-width: 860px;
+    }
+
+    .page-hero--books__eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: var(--accent);
+      margin-bottom: var(--space-md);
+    }
+
+    .page-hero--books__title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 700;
+      color: var(--text-inverse);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-md);
+    }
+
+    .page-hero--books__sub {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto var(--space-xl);
+    }
+
+    .page-hero--books__sub strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .page-hero--books__scroll {
+      position: absolute;
+      bottom: var(--space-lg);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .page-hero--books__scroll-line {
+      width: 1px;
+      height: 40px;
+      background: var(--text-muted);
+      opacity: 0.4;
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 0.8; transform: scaleY(1.15); }
+    }
+
+    /* ─── Rescue Banner ─────────────────────────────────────── */
+    .rescue-banner {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid rgba(44, 44, 44, 0.12);
+      padding: 10px var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .rescue-banner__text {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .rescue-banner__count {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .rescue-banner__track {
+      width: 100%;
+      height: 2px;
+      background: rgba(44, 44, 44, 0.12);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+
+    .rescue-banner__bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 1px;
+      transition: width 0.5s var(--ease-reveal);
+    }
+
+    /* ─── Books Section ─────────────────────────────────────── */
+    .books-section {
+      padding: var(--space-2xl) var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .books-section__header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .books-section__eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--text-muted);
+      margin-bottom: var(--space-sm);
+    }
+
+    .books-section__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.15;
+    }
+
+    /* ─── Books Grid ────────────────────────────────────────── */
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .book--wide {
+      grid-column: span 2;
+    }
+
+    /* ─── Book Card ─────────────────────────────────────────── */
+    .book {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--surface);
+      border: 1px solid rgba(44, 44, 44, 0.1);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      transition: transform 0.3s var(--ease-reveal),
+                  box-shadow 0.3s var(--ease-reveal),
+                  background 0.4s ease,
+                  border-color 0.4s ease;
+      user-select: none;
+    }
+
+    .book:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(var(--accent-rgb), 0.12);
+    }
+
+    .book--rescued {
+      background: #E2DDD4;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent), 0 8px 32px rgba(var(--accent-rgb), 0.15);
+    }
+
+    .book--rescued:hover {
+      box-shadow: 0 0 0 2px var(--accent), 0 12px 40px rgba(var(--accent-rgb), 0.22);
+    }
+
+    /* ─── Book Stamp ────────────────────────────────────────── */
+    .book__stamp {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      pointer-events: none;
+      white-space: nowrap;
+      transition: opacity 0.4s ease;
+      line-height: 1;
+      border: 3px solid currentColor;
+      padding: 4px 10px;
+    }
+
+    .book__stamp--condemned {
+      color: var(--accent);
+      opacity: 0.15;
+    }
+
+    .book__stamp--rescued {
+      color: var(--accent);
+      opacity: 0;
+    }
+
+    .book--rescued .book__stamp--condemned {
+      opacity: 0;
+    }
+
+    .book--rescued .book__stamp--rescued {
+      opacity: 0.85;
+    }
+
+    /* ─── Book Content ──────────────────────────────────────── */
+    .book__body {
+      position: relative;
+      z-index: 1;
+    }
+
+    .book__meta {
+      font-family: var(--font-body);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: var(--space-xs);
+    }
+
+    .book__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 4px;
+      transition: color 0.3s ease;
+    }
+
+    .book--wide .book__title {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+    }
+
+    .book__author {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: var(--space-sm);
+    }
+
+    .book__desc {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 420px;
+    }
+
+    .book--wide .book__desc {
+      max-width: 580px;
+    }
+
+    /* ─── Book Rescued Label ────────────────────────────────── */
+    .book__rescued-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-body);
+      font-size: 0.62rem;
+      font-variant: small-caps;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-top: var(--space-sm);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+    }
+
+    .book--rescued .book__rescued-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .book__rescued-label svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* ─── Pull Quote ────────────────────────────────────────── */
+    .pull-quote {
+      background: var(--surface-dark);
+      padding: var(--space-2xl) var(--space-lg);
+      text-align: center;
+    }
+
+    .pull-quote__inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .pull-quote__text {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text-inverse);
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      margin-bottom: var(--space-md);
+    }
+
+    .pull-quote__attr {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ─── Redacted word ─────────────────────────────────────── */
+    .redacted {
+      display: inline-block;
+      background: var(--redact);
+      color: transparent;
+      cursor: pointer;
+      border-radius: 2px;
+      padding: 0 3px;
+      transition: background 0.3s ease, color 0.3s ease;
+      position: relative;
+    }
+
+    .redacted:hover {
+      background: var(--accent);
+      color: var(--text-inverse);
+    }
+
+    /* ─── Footer ────────────────────────────────────────────── */
+    .footer {
+      background: var(--surface-dark);
+      padding: var(--space-xl) var(--space-lg);
+      border-top: 1px solid rgba(232, 228, 220, 0.08);
+    }
+
+    .footer__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-lg);
+    }
+
+    .footer__left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .footer__logo {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-inverse);
+      letter-spacing: -0.01em;
+    }
+
+    .footer__logo span {
+      color: var(--accent);
+    }
+
+    .footer__quote {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .footer__nav {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer__link {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+
+    .footer__link:hover {
+      color: var(--text-inverse);
+    }
+
+    .footer__copy {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      opacity: 0.5;
+      text-align: center;
+      padding-top: var(--space-md);
+      border-top: 1px solid rgba(232, 228, 220, 0.08);
+    }
+
+    /* ─── Responsive ────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .books-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .book--wide {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .books-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .book--wide {
+        grid-column: span 1;
+      }
+
+      .books-section {
+        padding: var(--space-xl) var(--space-sm);
+      }
+
+      .book__stamp {
+        font-size: 1.8rem;
+      }
+
+      .rescue-banner {
+        padding: 10px var(--space-sm);
+      }
+    }
+
+    /* ─── Reveal animation ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s var(--ease-reveal), transform 0.7s var(--ease-reveal);
+    }
+
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav" id="mainNav">
+    <a href="index.html" class="nav__logo">F<span>°</span>451</a>
+    <ul class="nav__links">
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="story.html" class="nav__link">The Story</a></li>
+      <li><a href="characters.html" class="nav__link">Characters</a></li>
+      <li><a href="themes.html" class="nav__link">Themes</a></li>
+      <li><a href="books.html" class="nav__link active">The Books</a></li>
+    </ul>
+    <button class="nav__hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav__overlay" id="navOverlay" aria-hidden="true">
+    <ul>
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="story.html" class="nav__link">The Story</a></li>
+      <li><a href="characters.html" class="nav__link">Characters</a></li>
+      <li><a href="themes.html" class="nav__link">Themes</a></li>
+      <li><a href="books.html" class="nav__link">The Books</a></li>
+    </ul>
+  </div>
+
+  <main id="main-content">
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section class="page-hero--books">
+    <div class="page-hero--books__content">
+      <p class="page-hero--books__eyebrow">Contraband</p>
+      <h1 class="page-hero--books__title">The Forbidden Library</h1>
+      <p class="page-hero--books__sub">
+        <strong>451°</strong> — the temperature at which paper burns.
+        These books were sentenced to ash. You decide what survives.
+      </p>
+    </div>
+    <div class="page-hero--books__scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="page-hero--books__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── Rescue Banner ─────────────────────────────────────── -->
+  <div class="rescue-banner" role="status" aria-live="polite">
+    <p class="rescue-banner__text">
+      You have rescued <span class="rescue-banner__count" id="rescueCount">0</span> of 12 books
+    </p>
+    <div class="rescue-banner__track">
+      <div class="rescue-banner__bar" id="rescueBar"></div>
+    </div>
+  </div>
+
+  <!-- ── Book Grid ─────────────────────────────────────────── -->
+  <section class="books-section">
+    <div class="books-section__header reveal">
+      <p class="books-section__eyebrow">Sentenced to flame</p>
+      <h2 class="books-section__title">Twelve Books. One Decision.</h2>
+    </div>
+
+    <div class="books-grid">
+
+      <!-- 1. Gulliver's Travels — wide -->
+      <article class="book book--wide reveal" data-book-id="gullivers-travels" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">1726 · Satire</p>
+          <h3 class="book__title">Gulliver's Travels</h3>
+          <p class="book__author">Jonathan Swift</p>
+          <p class="book__desc">Swift's razor-edged satire of human vanity, political corruption, and war was deemed too subversive — a text that taught readers to laugh at authority rather than obey it.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 2. Uncle Tom's Cabin -->
+      <article class="book reveal" data-book-id="uncle-toms-cabin" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">1852 · Novel</p>
+          <h3 class="book__title">Uncle Tom's Cabin</h3>
+          <p class="book__author">Harriet Beecher Stowe</p>
+          <p class="book__desc">A novel that inflamed a nation and hastened a war. In Bradbury's world, any book that provokes moral outrage — however righteous — is first in line for the flame.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 3. The Bible -->
+      <article class="book reveal" data-book-id="the-bible" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">Various · Scripture</p>
+          <h3 class="book__title">The Bible</h3>
+          <p class="book__author">Various Authors</p>
+          <p class="book__desc">Even scripture is not exempt. A text that commands questioning the state, loving one's enemy, and seeking truth above comfort is antithetical to a society built on comfortable numbness.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 4. Plato's Republic -->
+      <article class="book reveal" data-book-id="platos-republic" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">380 BC · Philosophy</p>
+          <h3 class="book__title">The Republic</h3>
+          <p class="book__author">Plato</p>
+          <p class="book__desc">The foundational text of Western political philosophy — a book that asks what a just society looks like. In Bradbury's state, the very question is a crime.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 5. Walden — wide -->
+      <article class="book book--wide reveal" data-book-id="walden" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">1854 · Philosophy</p>
+          <h3 class="book__title">Walden</h3>
+          <p class="book__author">Henry David Thoreau</p>
+          <p class="book__desc">Thoreau walked into the woods to think for himself. In a society addicted to the parlor walls and seashell radios, a book advocating deliberate solitude and civil disobedience is a direct act of war against the state.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 6. Don Quixote -->
+      <article class="book reveal" data-book-id="don-quixote" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">1605 · Novel</p>
+          <h3 class="book__title">Don Quixote</h3>
+          <p class="book__author">Miguel de Cervantes</p>
+          <p class="book__desc">The world's first modern novel — a man so intoxicated by books he fights windmills as giants. A dangerous reminder that imagination, however deluded, is a form of freedom.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 7. Hamlet -->
+      <article class="book reveal" data-book-id="hamlet" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">1603 · Tragedy</p>
+          <h3 class="book__title">Hamlet</h3>
+          <p class="book__author">William Shakespeare</p>
+          <p class="book__desc">"To be or not to be" — a question the state cannot afford citizens to ask. Shakespeare's tragedy of grief, hesitation, and revenge teaches that inner life is worth dying for.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 8. Moby-Dick -->
+      <article class="book reveal" data-book-id="moby-dick" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">1851 · Novel</p>
+          <h3 class="book__title">Moby-Dick</h3>
+          <p class="book__author">Herman Melville</p>
+          <p class="book__desc">A monomaniacal captain destroys himself pursuing meaning in a meaningless world. Bradbury's firemen would recognize the metaphor and burn it before anyone else did.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 9. Alice's Adventures in Wonderland — wide -->
+      <article class="book book--wide reveal" data-book-id="alice-in-wonderland" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">1865 · Fantasy</p>
+          <h3 class="book__title">Alice's Adventures in Wonderland</h3>
+          <p class="book__author">Lewis Carroll</p>
+          <p class="book__desc">A child falls into a world where logic is upside-down and authority is absurd. Carroll's gentle nonsense is a masterclass in questioning rules that no one can explain — the most subversive lesson of all.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 10. The Divine Comedy -->
+      <article class="book reveal" data-book-id="divine-comedy" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">1320 · Epic Poem</p>
+          <h3 class="book__title">The Divine Comedy</h3>
+          <p class="book__author">Dante Alighieri</p>
+          <p class="book__desc">A journey through Hell, Purgatory, and Paradise — a poem that holds individuals accountable for their choices long after death. Accountability is the enemy of comfort.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 11. Canterbury Tales -->
+      <article class="book reveal" data-book-id="canterbury-tales" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">c. 1400 · Poetry</p>
+          <h3 class="book__title">The Canterbury Tales</h3>
+          <p class="book__author">Geoffrey Chaucer</p>
+          <p class="book__desc">Chaucer's pilgrims mock priests, corrupt officials, and pompous knights with gleeful irreverence. A society that burns books cannot survive laughter at its own expense.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+      <!-- 12. Winesburg, Ohio -->
+      <article class="book reveal" data-book-id="winesburg-ohio" tabindex="0" role="button" aria-pressed="false">
+        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
+        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
+        <div class="book__body">
+          <p class="book__meta">1919 · Short Stories</p>
+          <h3 class="book__title">Winesburg, Ohio</h3>
+          <p class="book__author">Sherwood Anderson</p>
+          <p class="book__desc">Anderson's portraits of lonely, quietly broken small-town lives reveal the hidden cost of conformity. In Bradbury's world, naming that loneliness is the most dangerous act imaginable.</p>
+          <span class="book__rescued-label">
+            <i data-lucide="flame" aria-hidden="true"></i>
+            Rescued from the ashes
+          </span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ── Pull Quote ─────────────────────────────────────────── -->
+  <section class="pull-quote reveal">
+    <div class="pull-quote__inner">
+      <blockquote class="pull-quote__text">
+        "A book is a loaded gun in the house next door.
+        <span class="redacted" title="Hover to reveal">Burn</span> it."
+      </blockquote>
+      <p class="pull-quote__attr">— Captain Beatty, Fahrenheit 451</p>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <p class="footer__logo">F<span>°</span>451</p>
+        <p class="footer__quote">"A book is a loaded gun<br>in the house next door."</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="index.html" class="footer__link">Home</a>
+        <a href="story.html" class="footer__link">The Story</a>
+        <a href="characters.html" class="footer__link">Characters</a>
+        <a href="themes.html" class="footer__link">Themes</a>
+        <a href="books.html" class="footer__link">The Books</a>
+      </nav>
+      <p class="footer__copy">Fahrenheit 451 — Ray Bradbury, 1953 · Companion Site</p>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ────────────────────────────────────────────── -->
+  <script src="https://unpkg.com/lenis@latest/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="script.js"></script>
+  <script>if (typeof lucide !== 'undefined') lucide.createIcons();</script>
+
+  <script>
+    // ── Book Rescue System ───────────────────────────────────
+    const STORAGE_KEY = 'f451_rescued';
+    const TOTAL_BOOKS = 12;
+
+    function getSaved() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch { return []; }
+    }
+
+    function updateCounter() {
+      const saved = getSaved();
+      const countEl = document.getElementById('rescueCount');
+      const barEl = document.getElementById('rescueBar');
+      if (countEl) countEl.textContent = saved.length;
+      if (barEl) barEl.style.width = (saved.length / TOTAL_BOOKS * 100) + '%';
+    }
+
+    document.querySelectorAll('.book').forEach(card => {
+      const id = card.dataset.bookId;
+      const saved = getSaved();
+      if (saved.includes(id)) {
+        card.classList.add('book--rescued');
+        card.setAttribute('aria-pressed', 'true');
+      }
+
+      card.addEventListener('click', () => {
+        const current = getSaved();
+        const isRescued = card.classList.toggle('book--rescued');
+        card.setAttribute('aria-pressed', String(isRescued));
+        const updated = isRescued
+          ? [...current, id]
+          : current.filter(x => x !== id);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+        updateCounter();
+      });
+
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+    });
+
+    updateCounter();
+
+    // Reveals handled by script.js (IntersectionObserver adds .revealed)
+  </script>
+
+</body>
+</html>

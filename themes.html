@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Themes — Fahrenheit 451</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ── Hero ─────────────────────────────────────────── */
+    .themes-hero {
+      background: var(--surface-dark);
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .themes-hero__eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .themes-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: var(--text-inverse);
+      max-width: 900px;
+      margin-bottom: var(--space-lg);
+    }
+
+    .themes-hero__title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .themes-hero__subtitle {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(232, 228, 220, 0.55);
+      letter-spacing: 0.01em;
+      max-width: 440px;
+    }
+
+    /* ── Full-bleed theme sections ────────────────────── */
+    .theme-section {
+      width: 100%;
+      min-height: 85vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: var(--space-3xl) var(--space-xl);
+      gap: var(--space-xl);
+    }
+
+    .theme-section--right {
+      direction: rtl;
+    }
+
+    .theme-section--right > * {
+      direction: ltr;
+    }
+
+    .theme-section--light {
+      background: var(--bg);
+    }
+
+    .theme-section--dark {
+      background: var(--surface-dark);
+    }
+
+    .theme-section--mid {
+      background: var(--surface);
+    }
+
+    /* Background number */
+    .theme-section__num {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: clamp(8rem, 20vw, 18rem);
+      font-weight: 700;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.05em;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text);
+      opacity: 0.05;
+      z-index: 0;
+    }
+
+    .theme-section--dark .theme-section__num {
+      color: var(--text-inverse);
+      opacity: 0.04;
+    }
+
+    .theme-section__num--left { left: -2vw; }
+    .theme-section__num--right { right: -2vw; }
+
+    /* Text column */
+    .theme-section__meta {
+      position: relative;
+      z-index: 1;
+    }
+
+    .theme-section__eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .theme-section--dark .theme-section__eyebrow {
+      color: var(--accent-warm);
+    }
+
+    .theme-section__name {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: var(--space-md);
+    }
+
+    .theme-section--dark .theme-section__name {
+      color: var(--text-inverse);
+    }
+
+    /* Body column */
+    .theme-section__body {
+      position: relative;
+      z-index: 1;
+      max-width: 540px;
+    }
+
+    .theme-section--right .theme-section__body {
+      margin-left: auto;
+    }
+
+    .theme-section__tagline {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: var(--space-lg);
+      line-height: 1.4;
+    }
+
+    .theme-section--dark .theme-section__tagline {
+      color: var(--text-inverse);
+    }
+
+    .theme-section__text {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: var(--space-md);
+      max-width: 520px;
+    }
+
+    .theme-section--dark .theme-section__text {
+      color: rgba(232, 228, 220, 0.6);
+    }
+
+    /* Pull quote */
+    .theme-pull-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-style: italic;
+      color: var(--accent);
+      margin-top: var(--space-xl);
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
+    .theme-pull-quote--warm {
+      color: var(--accent-warm);
+    }
+
+    .theme-section--dark .theme-pull-quote {
+      color: var(--accent-warm);
+    }
+
+    /* Redacted list — censorship block */
+    .redacted-list {
+      margin: var(--space-lg) 0;
+      border: 1px solid rgba(44, 44, 44, 0.15);
+      padding: var(--space-md) var(--space-lg);
+      background: rgba(26, 26, 24, 0.04);
+    }
+
+    .redacted-list__label {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: var(--space-sm);
+    }
+
+    .redacted-list__item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xs);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .redacted-list__item::before {
+      content: '—';
+      opacity: 0.4;
+      flex-shrink: 0;
+    }
+
+    /* Living Books list — memory section */
+    .living-books {
+      margin: var(--space-lg) 0;
+    }
+
+    .living-books__label {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: var(--space-md);
+    }
+
+    .living-books__item {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .living-books__item .separator {
+      opacity: 0.3;
+      flex-shrink: 0;
+    }
+
+    /* Fire visual */
+    .fire-visual {
+      width: 80px;
+      height: 240px;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .fire-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--accent) 0%, var(--accent-warm) 40%, transparent 100%);
+      border-radius: 50% 50% 20% 20%;
+    }
+
+    .fire-visual::after {
+      content: '';
+      position: absolute;
+      inset: 10% 20%;
+      background: linear-gradient(to top, var(--accent-warm) 0%, rgba(245, 166, 35, 0.4) 60%, transparent 100%);
+      border-radius: 50% 50% 20% 20%;
+      animation: flicker 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 0.6; transform: scaleY(0.95) scaleX(0.98); }
+      100% { opacity: 1; transform: scaleY(1.05) scaleX(1.02); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fire-visual::after { animation: none; }
+    }
+
+    .fire-visual-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+
+    .fire-glow {
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle at center, rgba(196, 57, 15, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      filter: blur(12px);
+    }
+
+    /* ── Closing section ──────────────────────────────── */
+    .themes-closing {
+      background: var(--surface-dark);
+      padding: var(--space-3xl) var(--space-xl);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2xl);
+    }
+
+    .themes-closing__statement {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3.5vw, 2.5rem);
+      font-style: italic;
+      color: var(--text-inverse);
+      max-width: 680px;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .themes-closing__nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2xl);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .themes-closing__link {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(232, 228, 220, 0.5);
+      text-decoration: none;
+      padding: var(--space-sm) var(--space-lg);
+      border: 1px solid rgba(232, 228, 220, 0.15);
+      transition: color 0.25s ease, border-color 0.25s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .themes-closing__link:hover {
+      color: var(--text-inverse);
+      border-color: rgba(232, 228, 220, 0.5);
+    }
+
+    /* ── Mobile ───────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .theme-section {
+        grid-template-columns: 1fr;
+        padding: var(--space-2xl) var(--space-lg);
+        min-height: auto;
+        gap: var(--space-lg);
+      }
+
+      .theme-section--right {
+        direction: ltr;
+      }
+
+      .theme-section__num {
+        font-size: clamp(6rem, 30vw, 10rem);
+        opacity: 0.04;
+        top: var(--space-md);
+        transform: none;
+      }
+
+      .theme-section__num--right {
+        right: -1rem;
+      }
+
+      .theme-section__body {
+        max-width: 100%;
+      }
+
+      .theme-section--right .theme-section__body {
+        margin-left: 0;
+      }
+
+      .fire-visual-wrap {
+        min-height: 180px;
+      }
+
+      .fire-visual {
+        width: 50px;
+        height: 150px;
+      }
+
+      .themes-hero {
+        min-height: 50vh;
+        padding: var(--space-2xl) var(--space-lg) var(--space-xl);
+      }
+
+      .themes-closing__nav {
+        gap: var(--space-md);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .theme-section__num {
+        font-size: clamp(5rem, 28vw, 8rem);
+      }
+
+      .themes-hero__title {
+        font-size: clamp(2.8rem, 12vw, 4.5rem);
+      }
+    }
+
+    /* ── Reveal / animation ───────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal--delay-1 { transition-delay: 0.1s; }
+    .reveal--delay-2 { transition-delay: 0.2s; }
+    .reveal--delay-3 { transition-delay: 0.3s; }
+    .reveal--delay-4 { transition-delay: 0.45s; }
+    .reveal--delay-5 { transition-delay: 0.6s; }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav" id="mainNav">
+    <a href="index.html" class="nav__logo">F<span>°</span>451</a>
+    <ul class="nav__links">
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="story.html" class="nav__link">The Story</a></li>
+      <li><a href="characters.html" class="nav__link">Characters</a></li>
+      <li><a href="themes.html" class="nav__link">Themes</a></li>
+      <li><a href="books.html" class="nav__link">The Books</a></li>
+    </ul>
+    <button class="nav__hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav__overlay" id="navOverlay" aria-hidden="true">
+    <ul>
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="story.html" class="nav__link">The Story</a></li>
+      <li><a href="characters.html" class="nav__link">Characters</a></li>
+      <li><a href="themes.html" class="nav__link">Themes</a></li>
+      <li><a href="books.html" class="nav__link">The Books</a></li>
+    </ul>
+  </div>
+
+  <main id="main-content">
+
+    <!-- ── Hero ──────────────────────────────────────── -->
+    <section class="themes-hero">
+      <p class="themes-hero__eyebrow reveal">Themes</p>
+      <h1 class="themes-hero__title reveal reveal--delay-1">
+        The Ideas<br>That <em>Refuse</em> to Burn
+      </h1>
+      <p class="themes-hero__subtitle reveal reveal--delay-2">
+        Three ideas at the core of Bradbury's warning.
+      </p>
+    </section>
+
+    <!-- ── Theme 1: Censorship ────────────────────────── -->
+    <section class="theme-section theme-section--light" aria-label="Theme: Censorship">
+
+      <span class="theme-section__num theme-section__num--left" aria-hidden="true">01</span>
+
+      <!-- Left: label column -->
+      <div class="theme-section__meta">
+        <p class="theme-section__eyebrow reveal">Theme One</p>
+        <h2 class="theme-section__name reveal reveal--delay-1">Censorship</h2>
+      </div>
+
+      <!-- Right: body column -->
+      <div class="theme-section__body">
+        <p class="theme-section__tagline reveal reveal--delay-1">
+          "The system doesn't ban books. It makes people not want them."
+        </p>
+
+        <p class="theme-section__text reveal reveal--delay-2">
+          In Fahrenheit 451, censorship isn't enforced at gunpoint — it evolved gradually, driven by people's desire for comfort over complexity. Books were shortened, then simplified, then abandoned. The firemen came last, after society had already surrendered.
+        </p>
+
+        <p class="theme-section__text reveal reveal--delay-3">
+          Bradbury's warning is that censorship can emerge from passivity, not just tyranny. The real danger isn't the government burning books — it's citizens who stop caring enough to read them.
+        </p>
+
+        <p class="theme-section__text reveal reveal--delay-3">
+          Captain Beatty explains it best: nobody made this happen. Minority groups complained about this, other groups about that. The simplest answer was to remove anything that might offend, until nothing was left but noise.
+        </p>
+
+        <div class="redacted-list reveal reveal--delay-4" role="complementary" aria-label="Redacted subjects">
+          <p class="redacted-list__label">Prohibited Subjects — Classification Level 5</p>
+          <div class="redacted-list__item">
+            <span class="redacted">Critical Thought</span>
+          </div>
+          <div class="redacted-list__item">
+            <span class="redacted">Historical Records</span>
+          </div>
+          <div class="redacted-list__item">
+            <span class="redacted">Individual Opinion</span>
+          </div>
+        </div>
+
+        <blockquote class="theme-pull-quote reveal reveal--delay-5" data-split>
+          "If you don't want a man unhappy politically, don't give him two sides to a question."
+        </blockquote>
+      </div>
+
+    </section>
+
+    <!-- ── Theme 2: Fire ──────────────────────────────── -->
+    <section class="theme-section theme-section--dark theme-section--right" aria-label="Theme: Fire">
+
+      <span class="theme-section__num theme-section__num--right" aria-hidden="true">02</span>
+
+      <!-- Visual column (fire) -->
+      <div class="fire-visual-wrap reveal">
+        <div style="position: relative;">
+          <div class="fire-visual" role="img" aria-label="Flame illustration"></div>
+          <div class="fire-glow"></div>
+        </div>
+      </div>
+
+      <!-- Text column -->
+      <div class="theme-section__body">
+        <p class="theme-section__eyebrow reveal">Theme Two</p>
+        <h2 class="theme-section__name reveal reveal--delay-1">Fire</h2>
+
+        <p class="theme-section__tagline reveal reveal--delay-2">
+          "Fire destroys. Fire purifies. Fire is both the weapon and the cure."
+        </p>
+
+        <p class="theme-section__text reveal reveal--delay-3">
+          Fire in Fahrenheit 451 begins as a tool of oppression — Montag's weapon, the fireman's symbol of power. But Bradbury subverts it: by the novel's end, fire becomes warmth, survival, and rebirth.
+        </p>
+
+        <p class="theme-section__text reveal reveal--delay-3">
+          The campfire of the Book People contrasts sharply with the inferno of the city. The same element that erased knowledge now illuminates the survivors, drying their clothes and lighting their faces.
+        </p>
+
+        <p class="theme-section__text reveal reveal--delay-4">
+          Even Montag's own home burns — and it's the first honest thing he's seen in years. Destruction, Bradbury suggests, can be the necessary precondition for something true.
+        </p>
+
+        <blockquote class="theme-pull-quote theme-pull-quote--warm reveal reveal--delay-5" data-split>
+          "Fire is bright and fire is clean."
+        </blockquote>
+      </div>
+
+    </section>
+
+    <!-- ── Theme 3: Memory ────────────────────────────── -->
+    <section class="theme-section theme-section--mid" aria-label="Theme: Memory">
+
+      <span class="theme-section__num theme-section__num--left" aria-hidden="true">03</span>
+
+      <!-- Left: label column -->
+      <div class="theme-section__meta">
+        <p class="theme-section__eyebrow reveal">Theme Three</p>
+        <h2 class="theme-section__name reveal reveal--delay-1">Memory</h2>
+      </div>
+
+      <!-- Right: body column -->
+      <div class="theme-section__body">
+        <p class="theme-section__tagline reveal reveal--delay-1">
+          "If you burn the books, you must burn the people who remember them."
+        </p>
+
+        <p class="theme-section__text reveal reveal--delay-2">
+          The Book People — the wandering intellectuals Montag meets at the end — have each memorized a complete book. They ARE the library. Bradbury argues that memory is the ultimate act of resistance: knowledge that lives in a person can't be confiscated.
+        </p>
+
+        <p class="theme-section__text reveal reveal--delay-2">
+          The novel ends with Montag carrying Ecclesiastes in his mind, walking toward a destroyed city to help rebuild it. He isn't escaping — he's preparing.
+        </p>
+
+        <p class="theme-section__text reveal reveal--delay-3">
+          This is Bradbury's most hopeful idea: that the act of remembering is itself a form of defiance. You don't need a library if you become one.
+        </p>
+
+        <div class="living-books reveal reveal--delay-4" role="complementary" aria-label="The living books">
+          <p class="living-books__label">The Living Books — Hover to reveal</p>
+
+          <div class="living-books__item">
+            <span class="redacted">Granger</span>
+            <span class="separator">—</span>
+            <span>remembers his grandfather</span>
+          </div>
+          <div class="living-books__item">
+            <span class="redacted">The Book of Job</span>
+            <span class="separator">—</span>
+            <span>carried by an old man</span>
+          </div>
+          <div class="living-books__item">
+            <span class="redacted">Ecclesiastes</span>
+            <span class="separator">—</span>
+            <span>carried by Montag</span>
+          </div>
+          <div class="living-books__item">
+            <span class="redacted">Marcus Aurelius</span>
+            <span class="separator">—</span>
+            <span>the philosopher-soldier</span>
+          </div>
+        </div>
+
+        <blockquote class="theme-pull-quote reveal reveal--delay-5" data-split>
+          "We are all bits and pieces of history and literature and international law."
+        </blockquote>
+      </div>
+
+    </section>
+
+    <!-- ── Closing ─────────────────────────────────────── -->
+    <section class="themes-closing">
+      <p class="themes-closing__statement reveal">
+        Fahrenheit 451 isn't a book about the future. It's about right now.
+      </p>
+      <nav class="themes-closing__nav reveal reveal--delay-2" aria-label="Page navigation">
+        <a href="story.html" class="themes-closing__link">← The Story</a>
+        <a href="characters.html" class="themes-closing__link">The Characters →</a>
+      </nav>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <p class="footer__logo">F<span>°</span>451</p>
+        <p class="footer__quote">"A book is a loaded gun<br>in the house next door."</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="index.html" class="footer__link">Home</a>
+        <a href="story.html" class="footer__link">The Story</a>
+        <a href="characters.html" class="footer__link">Characters</a>
+        <a href="themes.html" class="footer__link">Themes</a>
+        <a href="books.html" class="footer__link">The Books</a>
+      </nav>
+      <p class="footer__copy">Fahrenheit 451 — Ray Bradbury, 1953 · Companion Site</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@latest/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="script.js"></script>
+  <script>if (typeof lucide !== 'undefined') lucide.createIcons();</script>
+
+
+</body>
+</html>
