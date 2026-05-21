@@ -754,6 +754,449 @@
     </div>
   </section>
 
+  <!-- ── Maze Mini-Game ─────────────────────────────────────── -->
+  <section class="maze-section" id="mazeSection">
+    <style>
+      .maze-section {
+        padding: var(--space-xl) var(--space-md);
+        background: var(--surface);
+        text-align: center;
+      }
+      .maze-section__heading {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 0.5rem;
+      }
+      .maze-section__sub {
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        color: var(--ink);
+        opacity: 0.6;
+        margin-bottom: var(--space-md);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      /* Intro panel */
+      #mazeIntro {
+        max-width: 480px;
+        margin: 0 auto var(--space-md);
+        background: #3D3D3D;
+        color: #E8E4DC;
+        padding: 2rem 2.5rem;
+        border-radius: 2px;
+      }
+      #mazeIntro p {
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+        opacity: 0.85;
+      }
+      #mazeIntro .maze-keys {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .maze-key {
+        background: rgba(232,228,220,0.1);
+        border: 1px solid rgba(232,228,220,0.25);
+        color: #E8E4DC;
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        padding: 0.35rem 0.7rem;
+        border-radius: 3px;
+        letter-spacing: 0.04em;
+      }
+      #mazeStartBtn {
+        background: var(--accent);
+        color: #E8E4DC;
+        border: none;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.85rem 2.5rem;
+        cursor: pointer;
+        border-radius: 2px;
+        transition: background 0.2s, transform 0.15s;
+      }
+      #mazeStartBtn:hover { background: #a82e08; transform: translateY(-1px); }
+
+      /* Game wrapper */
+      #mazeGame { display: none; }
+      #mazeGame.active { display: block; }
+
+      /* HUD */
+      .maze-hud {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink);
+        opacity: 0.7;
+      }
+      .maze-hud__rescued { color: var(--accent-warm); opacity: 1; font-weight: 600; }
+
+      /* Canvas */
+      #mazeCanvas {
+        display: block;
+        margin: 0 auto;
+        border: 1px solid rgba(44,44,44,0.15);
+        border-radius: 2px;
+        max-width: 100%;
+        touch-action: none;
+      }
+
+      /* Mobile d-pad */
+      .maze-dpad {
+        display: none;
+        grid-template-areas:
+          ". up ."
+          "left . right"
+          ". down .";
+        grid-template-columns: repeat(3, 52px);
+        gap: 6px;
+        justify-content: center;
+        margin-top: 1.25rem;
+      }
+      @media (max-width: 600px) { .maze-dpad { display: grid; } }
+      .dpad-btn {
+        background: #3D3D3D;
+        color: #E8E4DC;
+        border: none;
+        border-radius: 4px;
+        height: 52px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.1s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .dpad-btn:active { background: var(--accent); }
+      .dpad-btn[data-dir="up"]    { grid-area: up; }
+      .dpad-btn[data-dir="left"]  { grid-area: left; }
+      .dpad-btn[data-dir="right"] { grid-area: right; }
+      .dpad-btn[data-dir="down"]  { grid-area: down; }
+
+      /* Win overlay */
+      #mazeWin {
+        display: none;
+        max-width: 480px;
+        margin: 1.5rem auto 0;
+        background: var(--accent);
+        color: #E8E4DC;
+        padding: 2rem 2.5rem;
+        border-radius: 2px;
+        animation: mazeWinFade 0.5s ease forwards;
+      }
+      @keyframes mazeWinFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+      #mazeWin h3 {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      #mazeWin p {
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+      #mazeWin button {
+        background: rgba(232,228,220,0.2);
+        border: 1px solid rgba(232,228,220,0.5);
+        color: #E8E4DC;
+        font-family: var(--font-body);
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.7rem 2rem;
+        cursor: pointer;
+        border-radius: 2px;
+        transition: background 0.2s;
+      }
+      #mazeWin button:hover { background: rgba(232,228,220,0.35); }
+    </style>
+
+    <h2 class="maze-section__heading reveal">The Forbidden Library</h2>
+    <p class="maze-section__sub reveal">Navigate the maze — rescue 5 books before they burn</p>
+
+    <!-- Intro -->
+    <div id="mazeIntro">
+      <p>Deep in the labyrinth of the censored world, five books wait to be rescued. Find them all before the firemen arrive.</p>
+      <div class="maze-keys">
+        <span class="maze-key">↑ ↓ ← →</span>
+        <span class="maze-key">W A S D</span>
+        <span class="maze-key">Swipe on mobile</span>
+      </div>
+      <button id="mazeStartBtn">Enter the Maze</button>
+    </div>
+
+    <!-- Game -->
+    <div id="mazeGame">
+      <div class="maze-hud">
+        <span>Books rescued: <span class="maze-hud__rescued" id="mazeCount">0</span> / 5</span>
+      </div>
+      <canvas id="mazeCanvas" width="475" height="475"></canvas>
+      <div class="maze-dpad">
+        <button class="dpad-btn" data-dir="up">↑</button>
+        <button class="dpad-btn" data-dir="left">←</button>
+        <button class="dpad-btn" data-dir="right">→</button>
+        <button class="dpad-btn" data-dir="down">↓</button>
+      </div>
+    </div>
+
+    <!-- Win -->
+    <div id="mazeWin">
+      <h3>All Books Rescued</h3>
+      <p>"A book is a loaded gun in the house next door. Whoever it was the man found the gun, he could aim it at anyone." You saved them all.</p>
+      <button id="mazeReplayBtn">Play Again</button>
+    </div>
+  </section>
+
+  <script>
+  (function () {
+    /* ── Config ── */
+    const COLS = 19, ROWS = 19;
+    const CELL = 25; // px per cell
+    const BOOK_COUNT = 5;
+    const COLORS = {
+      wall: '#2C2C2C',
+      path: '#E8E4DC',
+      player: '#C4390F',
+      book: '#F5A623',
+      bookGlow: 'rgba(245,166,35,0.35)',
+      rescued: 'rgba(196,57,15,0.15)',
+      exit: 'rgba(245,166,35,0.5)'
+    };
+
+    /* ── Elements ── */
+    const intro  = document.getElementById('mazeIntro');
+    const game   = document.getElementById('mazeGame');
+    const win    = document.getElementById('mazeWin');
+    const canvas = document.getElementById('mazeCanvas');
+    const ctx    = canvas.getContext('2d');
+    const countEl = document.getElementById('mazeCount');
+    const startBtn  = document.getElementById('mazeStartBtn');
+    const replayBtn = document.getElementById('mazeReplayBtn');
+
+    /* ── State ── */
+    let maze, player, books, rescued, animFrame;
+
+    /* ── Maze generation: recursive backtracker ── */
+    function generateMaze() {
+      // Grid: each cell has walls [N, E, S, W]
+      const grid = Array.from({ length: ROWS }, () =>
+        Array.from({ length: COLS }, () => ({ n: true, e: true, s: true, w: true, visited: false }))
+      );
+
+      function carve(r, c) {
+        grid[r][c].visited = true;
+        const dirs = shuffle([
+          { dr: -1, dc: 0, wall: 'n', opp: 's' },
+          { dr:  1, dc: 0, wall: 's', opp: 'n' },
+          { dr:  0, dc: 1, wall: 'e', opp: 'w' },
+          { dr:  0, dc:-1, wall: 'w', opp: 'e' }
+        ]);
+        for (const { dr, dc, wall, opp } of dirs) {
+          const nr = r + dr, nc = c + dc;
+          if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && !grid[nr][nc].visited) {
+            grid[r][c][wall] = false;
+            grid[nr][nc][opp] = false;
+            carve(nr, nc);
+          }
+        }
+      }
+      carve(0, 0);
+      return grid;
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    /* Find dead ends (cells with 3 walls) for book placement */
+    function findDeadEnds(grid) {
+      const ends = [];
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const cell = grid[r][c];
+          const walls = [cell.n, cell.e, cell.s, cell.w].filter(Boolean).length;
+          if (walls === 3 && !(r === 0 && c === 0)) ends.push({ r, c });
+        }
+      }
+      return ends;
+    }
+
+    function initGame() {
+      maze  = generateMaze();
+      player = { r: 0, c: 0 };
+      rescued = 0;
+
+      // Place books at dead ends, spread out
+      const deadEnds = shuffle(findDeadEnds(maze));
+      books = deadEnds.slice(0, BOOK_COUNT).map(pos => ({ ...pos, collected: false }));
+
+      if (countEl) countEl.textContent = '0';
+      draw();
+    }
+
+    /* ── Rendering ── */
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Background
+      ctx.fillStyle = COLORS.path;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw walls
+      ctx.strokeStyle = COLORS.wall;
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'square';
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const x = c * CELL, y = r * CELL;
+          const cell = maze[r][c];
+          if (cell.n) { ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + CELL, y); ctx.stroke(); }
+          if (cell.e) { ctx.beginPath(); ctx.moveTo(x + CELL, y); ctx.lineTo(x + CELL, y + CELL); ctx.stroke(); }
+          if (cell.s) { ctx.beginPath(); ctx.moveTo(x, y + CELL); ctx.lineTo(x + CELL, y + CELL); ctx.stroke(); }
+          if (cell.w) { ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + CELL); ctx.stroke(); }
+        }
+      }
+
+      // Draw books
+      for (const book of books) {
+        if (book.collected) continue;
+        const bx = book.c * CELL + CELL / 2;
+        const by = book.r * CELL + CELL / 2;
+        // Glow
+        ctx.fillStyle = COLORS.bookGlow;
+        ctx.beginPath();
+        ctx.arc(bx, by, CELL * 0.55, 0, Math.PI * 2);
+        ctx.fill();
+        // Book rect
+        ctx.fillStyle = COLORS.book;
+        ctx.fillRect(bx - 6, by - 7, 12, 14);
+        ctx.fillStyle = 'rgba(0,0,0,0.25)';
+        ctx.fillRect(bx - 6, by - 7, 2, 14);
+      }
+
+      // Draw player
+      const px = player.c * CELL + CELL / 2;
+      const py = player.r * CELL + CELL / 2;
+      ctx.fillStyle = 'rgba(196,57,15,0.2)';
+      ctx.beginPath();
+      ctx.arc(px, py, CELL * 0.45, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = COLORS.player;
+      ctx.beginPath();
+      ctx.arc(px, py, CELL * 0.28, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    /* ── Movement ── */
+    function move(dir) {
+      const { r, c } = player;
+      const cell = maze[r][c];
+      let nr = r, nc = c;
+
+      if (dir === 'n' && !cell.n) nr--;
+      if (dir === 's' && !cell.s) nr++;
+      if (dir === 'e' && !cell.e) nc++;
+      if (dir === 'w' && !cell.w) nc--;
+
+      if (nr === r && nc === c) return; // hit wall
+
+      player = { r: nr, c: nc };
+      checkBook();
+      draw();
+    }
+
+    function checkBook() {
+      for (const book of books) {
+        if (!book.collected && book.r === player.r && book.c === player.c) {
+          book.collected = true;
+          rescued++;
+          if (countEl) countEl.textContent = rescued;
+          if (rescued === BOOK_COUNT) setTimeout(showWin, 400);
+        }
+      }
+    }
+
+    function showWin() {
+      win.style.display = 'block';
+    }
+
+    /* ── Controls ── */
+    document.addEventListener('keydown', (e) => {
+      if (game.style.display === 'none' && !game.classList.contains('active')) return;
+      const map = {
+        ArrowUp: 'n', ArrowDown: 's', ArrowRight: 'e', ArrowLeft: 'w',
+        w: 'n', s: 's', d: 'e', a: 'w',
+        W: 'n', S: 's', D: 'e', A: 'w'
+      };
+      if (map[e.key]) { e.preventDefault(); move(map[e.key]); }
+    });
+
+    // D-pad buttons
+    document.querySelectorAll('.dpad-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dirMap = { up: 'n', down: 's', right: 'e', left: 'w' };
+        move(dirMap[btn.dataset.dir]);
+      });
+    });
+
+    // Touch swipe
+    let touchStart = null;
+    canvas.addEventListener('touchstart', e => {
+      touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }, { passive: true });
+    canvas.addEventListener('touchend', e => {
+      if (!touchStart) return;
+      const dx = e.changedTouches[0].clientX - touchStart.x;
+      const dy = e.changedTouches[0].clientY - touchStart.y;
+      touchStart = null;
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+      if (Math.abs(dx) > Math.abs(dy)) {
+        move(dx > 0 ? 'e' : 'w');
+      } else {
+        move(dy > 0 ? 's' : 'n');
+      }
+    }, { passive: true });
+
+    /* ── Start / Replay ── */
+    startBtn.addEventListener('click', () => {
+      intro.style.display = 'none';
+      game.classList.add('active');
+      win.style.display = 'none';
+      initGame();
+    });
+
+    replayBtn.addEventListener('click', () => {
+      win.style.display = 'none';
+      initGame();
+    });
+  })();
+  </script>
+
   </main>
 
   <!-- ── Footer ─────────────────────────────────────────────── -->

@@ -9,10 +9,10 @@
   const counter = document.getElementById('preloaderCount');
   let count = 0;
   const interval = setInterval(() => {
-    count += Math.floor(Math.random() * 8) + 2;
-    if (count >= 100) { count = 100; clearInterval(interval); }
+    count += Math.floor(Math.random() * 25) + 8;
+    if (count >= 451) { count = 451; clearInterval(interval); }
     if (counter) counter.textContent = count;
-    if (count === 100) setTimeout(() => preloader.classList.add('done'), 300);
+    if (count === 451) setTimeout(() => preloader.classList.add('done'), 300);
   }, 30);
 })();
 
