@@ -90,232 +90,6 @@
       50% { opacity: 0.8; transform: scaleY(1.15); }
     }
 
-    /* ─── Rescue Banner ─────────────────────────────────────── */
-    .rescue-banner {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--surface);
-      border-bottom: 1px solid rgba(44, 44, 44, 0.12);
-      padding: 10px var(--space-lg);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .rescue-banner__text {
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    .rescue-banner__count {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .rescue-banner__track {
-      width: 100%;
-      height: 2px;
-      background: rgba(44, 44, 44, 0.12);
-      border-radius: 1px;
-      overflow: hidden;
-    }
-
-    .rescue-banner__bar {
-      height: 100%;
-      width: 0%;
-      background: var(--accent);
-      border-radius: 1px;
-      transition: width 0.5s var(--ease-reveal);
-    }
-
-    /* ─── Books Section ─────────────────────────────────────── */
-    .books-section {
-      padding: var(--space-2xl) var(--space-lg);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .books-section__header {
-      text-align: center;
-      margin-bottom: var(--space-xl);
-    }
-
-    .books-section__eyebrow {
-      font-family: var(--font-body);
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: var(--text-muted);
-      margin-bottom: var(--space-sm);
-    }
-
-    .books-section__title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.15;
-    }
-
-    /* ─── Books Grid ────────────────────────────────────────── */
-    .books-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-
-    .book--wide {
-      grid-column: span 2;
-    }
-
-    /* ─── Book Card ─────────────────────────────────────────── */
-    .book {
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      background: var(--surface);
-      border: 1px solid rgba(44, 44, 44, 0.1);
-      border-radius: var(--radius-md);
-      padding: var(--space-lg);
-      transition: transform 0.3s var(--ease-reveal),
-                  box-shadow 0.3s var(--ease-reveal),
-                  background 0.4s ease,
-                  border-color 0.4s ease;
-      user-select: none;
-    }
-
-    .book:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 32px rgba(var(--accent-rgb), 0.12);
-    }
-
-    .book--rescued {
-      background: #E2DDD4;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px var(--accent), 0 8px 32px rgba(var(--accent-rgb), 0.15);
-    }
-
-    .book--rescued:hover {
-      box-shadow: 0 0 0 2px var(--accent), 0 12px 40px rgba(var(--accent-rgb), 0.22);
-    }
-
-    /* ─── Book Stamp ────────────────────────────────────────── */
-    .book__stamp {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-12deg);
-      font-family: var(--font-display);
-      font-size: 2.8rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      pointer-events: none;
-      white-space: nowrap;
-      transition: opacity 0.4s ease;
-      line-height: 1;
-      border: 3px solid currentColor;
-      padding: 4px 10px;
-    }
-
-    .book__stamp--condemned {
-      color: var(--accent);
-      opacity: 0.15;
-    }
-
-    .book__stamp--rescued {
-      color: var(--accent);
-      opacity: 0;
-    }
-
-    .book--rescued .book__stamp--condemned {
-      opacity: 0;
-    }
-
-    .book--rescued .book__stamp--rescued {
-      opacity: 0.85;
-    }
-
-    /* ─── Book Content ──────────────────────────────────────── */
-    .book__body {
-      position: relative;
-      z-index: 1;
-    }
-
-    .book__meta {
-      font-family: var(--font-body);
-      font-size: 0.62rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-      margin-bottom: var(--space-xs);
-    }
-
-    .book__title {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.15;
-      margin-bottom: 4px;
-      transition: color 0.3s ease;
-    }
-
-    .book--wide .book__title {
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-    }
-
-    .book__author {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      letter-spacing: 0.06em;
-      margin-bottom: var(--space-sm);
-    }
-
-    .book__desc {
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-      max-width: 420px;
-    }
-
-    .book--wide .book__desc {
-      max-width: 580px;
-    }
-
-    /* ─── Book Rescued Label ────────────────────────────────── */
-    .book__rescued-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: var(--font-body);
-      font-size: 0.62rem;
-      font-variant: small-caps;
-      letter-spacing: 0.14em;
-      color: var(--accent);
-      margin-top: var(--space-sm);
-      opacity: 0;
-      transform: translateY(4px);
-      transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
-    }
-
-    .book--rescued .book__rescued-label {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .book__rescued-label svg {
-      width: 12px;
-      height: 12px;
-    }
-
     /* ─── Pull Quote ────────────────────────────────────────── */
     .pull-quote {
       background: var(--surface-dark);
@@ -359,7 +133,18 @@
       position: relative;
     }
 
-    .redacted:hover {
+    .redacted:hover,
+    .redacted.redacted--revealed {
+      background: var(--accent);
+      color: var(--text-inverse);
+    }
+
+    /* Pull-quote context: redacted bar must be visible on dark bg */
+    .pull-quote .redacted {
+      background: rgba(232, 228, 220, 0.85);
+    }
+    .pull-quote .redacted:hover,
+    .pull-quote .redacted.redacted--revealed {
       background: var(--accent);
       color: var(--text-inverse);
     }
@@ -438,39 +223,6 @@
       border-top: 1px solid rgba(232, 228, 220, 0.08);
     }
 
-    /* ─── Responsive ────────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .books-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .book--wide {
-        grid-column: span 2;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .books-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .book--wide {
-        grid-column: span 1;
-      }
-
-      .books-section {
-        padding: var(--space-xl) var(--space-sm);
-      }
-
-      .book__stamp {
-        font-size: 1.8rem;
-      }
-
-      .rescue-banner {
-        padding: 10px var(--space-sm);
-      }
-    }
-
     /* ─── Reveal animation ──────────────────────────────────── */
     .reveal {
       opacity: 0;
@@ -529,220 +281,6 @@
     </div>
   </section>
 
-  <!-- ── Rescue Banner ─────────────────────────────────────── -->
-  <div class="rescue-banner" role="status" aria-live="polite">
-    <p class="rescue-banner__text">
-      You have rescued <span class="rescue-banner__count" id="rescueCount">0</span> of 12 books
-    </p>
-    <div class="rescue-banner__track">
-      <div class="rescue-banner__bar" id="rescueBar"></div>
-    </div>
-  </div>
-
-  <!-- ── Book Grid ─────────────────────────────────────────── -->
-  <section class="books-section">
-    <div class="books-section__header reveal">
-      <p class="books-section__eyebrow">Sentenced to flame</p>
-      <h2 class="books-section__title">Twelve Books. One Decision.</h2>
-    </div>
-
-    <div class="books-grid">
-
-      <!-- 1. Gulliver's Travels — wide -->
-      <article class="book book--wide reveal" data-book-id="gullivers-travels" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">1726 · Satire</p>
-          <h3 class="book__title">Gulliver's Travels</h3>
-          <p class="book__author">Jonathan Swift</p>
-          <p class="book__desc">Swift's razor-edged satire of human vanity, political corruption, and war was deemed too subversive — a text that taught readers to laugh at authority rather than obey it.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 2. Uncle Tom's Cabin -->
-      <article class="book reveal" data-book-id="uncle-toms-cabin" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">1852 · Novel</p>
-          <h3 class="book__title">Uncle Tom's Cabin</h3>
-          <p class="book__author">Harriet Beecher Stowe</p>
-          <p class="book__desc">A novel that inflamed a nation and hastened a war. In Bradbury's world, any book that provokes moral outrage — however righteous — is first in line for the flame.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 3. The Bible -->
-      <article class="book reveal" data-book-id="the-bible" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">Various · Scripture</p>
-          <h3 class="book__title">The Bible</h3>
-          <p class="book__author">Various Authors</p>
-          <p class="book__desc">Even scripture is not exempt. A text that commands questioning the state, loving one's enemy, and seeking truth above comfort is antithetical to a society built on comfortable numbness.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 4. Plato's Republic -->
-      <article class="book reveal" data-book-id="platos-republic" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">380 BC · Philosophy</p>
-          <h3 class="book__title">The Republic</h3>
-          <p class="book__author">Plato</p>
-          <p class="book__desc">The foundational text of Western political philosophy — a book that asks what a just society looks like. In Bradbury's state, the very question is a crime.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 5. Walden — wide -->
-      <article class="book book--wide reveal" data-book-id="walden" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">1854 · Philosophy</p>
-          <h3 class="book__title">Walden</h3>
-          <p class="book__author">Henry David Thoreau</p>
-          <p class="book__desc">Thoreau walked into the woods to think for himself. In a society addicted to the parlor walls and seashell radios, a book advocating deliberate solitude and civil disobedience is a direct act of war against the state.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 6. Don Quixote -->
-      <article class="book reveal" data-book-id="don-quixote" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">1605 · Novel</p>
-          <h3 class="book__title">Don Quixote</h3>
-          <p class="book__author">Miguel de Cervantes</p>
-          <p class="book__desc">The world's first modern novel — a man so intoxicated by books he fights windmills as giants. A dangerous reminder that imagination, however deluded, is a form of freedom.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 7. Hamlet -->
-      <article class="book reveal" data-book-id="hamlet" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">1603 · Tragedy</p>
-          <h3 class="book__title">Hamlet</h3>
-          <p class="book__author">William Shakespeare</p>
-          <p class="book__desc">"To be or not to be" — a question the state cannot afford citizens to ask. Shakespeare's tragedy of grief, hesitation, and revenge teaches that inner life is worth dying for.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 8. Moby-Dick -->
-      <article class="book reveal" data-book-id="moby-dick" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">1851 · Novel</p>
-          <h3 class="book__title">Moby-Dick</h3>
-          <p class="book__author">Herman Melville</p>
-          <p class="book__desc">A monomaniacal captain destroys himself pursuing meaning in a meaningless world. Bradbury's firemen would recognize the metaphor and burn it before anyone else did.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 9. Alice's Adventures in Wonderland — wide -->
-      <article class="book book--wide reveal" data-book-id="alice-in-wonderland" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">1865 · Fantasy</p>
-          <h3 class="book__title">Alice's Adventures in Wonderland</h3>
-          <p class="book__author">Lewis Carroll</p>
-          <p class="book__desc">A child falls into a world where logic is upside-down and authority is absurd. Carroll's gentle nonsense is a masterclass in questioning rules that no one can explain — the most subversive lesson of all.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 10. The Divine Comedy -->
-      <article class="book reveal" data-book-id="divine-comedy" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">1320 · Epic Poem</p>
-          <h3 class="book__title">The Divine Comedy</h3>
-          <p class="book__author">Dante Alighieri</p>
-          <p class="book__desc">A journey through Hell, Purgatory, and Paradise — a poem that holds individuals accountable for their choices long after death. Accountability is the enemy of comfort.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 11. Canterbury Tales -->
-      <article class="book reveal" data-book-id="canterbury-tales" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">c. 1400 · Poetry</p>
-          <h3 class="book__title">The Canterbury Tales</h3>
-          <p class="book__author">Geoffrey Chaucer</p>
-          <p class="book__desc">Chaucer's pilgrims mock priests, corrupt officials, and pompous knights with gleeful irreverence. A society that burns books cannot survive laughter at its own expense.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-      <!-- 12. Winesburg, Ohio -->
-      <article class="book reveal" data-book-id="winesburg-ohio" tabindex="0" role="button" aria-pressed="false">
-        <span class="book__stamp book__stamp--condemned" aria-hidden="true">Condemned</span>
-        <span class="book__stamp book__stamp--rescued" aria-hidden="true">Rescued</span>
-        <div class="book__body">
-          <p class="book__meta">1919 · Short Stories</p>
-          <h3 class="book__title">Winesburg, Ohio</h3>
-          <p class="book__author">Sherwood Anderson</p>
-          <p class="book__desc">Anderson's portraits of lonely, quietly broken small-town lives reveal the hidden cost of conformity. In Bradbury's world, naming that loneliness is the most dangerous act imaginable.</p>
-          <span class="book__rescued-label">
-            <i data-lucide="flame" aria-hidden="true"></i>
-            Rescued from the ashes
-          </span>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
   <!-- ── Pull Quote ─────────────────────────────────────────── -->
   <section class="pull-quote reveal">
     <div class="pull-quote__inner">
@@ -754,22 +292,22 @@
     </div>
   </section>
 
-  <!-- ── Maze Mini-Game ─────────────────────────────────────── -->
-  <section class="maze-section" id="mazeSection">
+  <!-- ── Snake Mini-Game ───────────────────────────────────── -->
+  <section class="snake-section" id="snakeSection">
     <style>
-      .maze-section {
+      .snake-section {
         padding: var(--space-xl) var(--space-md);
         background: var(--surface);
         text-align: center;
       }
-      .maze-section__heading {
+      .snake-section__heading {
         font-family: var(--font-display);
         font-size: clamp(2rem, 5vw, 3.5rem);
         font-weight: 700;
         color: var(--ink);
         margin-bottom: 0.5rem;
       }
-      .maze-section__sub {
+      .snake-section__sub {
         font-family: var(--font-body);
         font-size: 0.95rem;
         color: var(--ink);
@@ -779,30 +317,30 @@
         text-transform: uppercase;
       }
 
-      /* Intro panel */
-      #mazeIntro {
-        max-width: 480px;
+      /* ── Panels ── */
+      .snake-panel {
+        max-width: 460px;
         margin: 0 auto var(--space-md);
         background: #3D3D3D;
         color: #E8E4DC;
         padding: 2rem 2.5rem;
         border-radius: 2px;
       }
-      #mazeIntro p {
+      .snake-panel p {
         font-family: var(--font-body);
         font-size: 0.9rem;
         line-height: 1.7;
         margin-bottom: 1.5rem;
         opacity: 0.85;
       }
-      #mazeIntro .maze-keys {
+      .snake-keys {
         display: flex;
         gap: 0.5rem;
         justify-content: center;
         margin-bottom: 1.5rem;
         flex-wrap: wrap;
       }
-      .maze-key {
+      .snake-key {
         background: rgba(232,228,220,0.1);
         border: 1px solid rgba(232,228,220,0.25);
         color: #E8E4DC;
@@ -812,7 +350,7 @@
         border-radius: 3px;
         letter-spacing: 0.04em;
       }
-      #mazeStartBtn {
+      .snake-btn {
         background: var(--accent);
         color: #E8E4DC;
         border: none;
@@ -825,30 +363,59 @@
         border-radius: 2px;
         transition: background 0.2s, transform 0.15s;
       }
-      #mazeStartBtn:hover { background: #a82e08; transform: translateY(-1px); }
+      .snake-btn:hover { background: #a82e08; transform: translateY(-1px); }
 
-      /* Game wrapper */
-      #mazeGame { display: none; }
-      #mazeGame.active { display: block; }
+      /* ── Game over panel ── */
+      #snakeOver {
+        display: none;
+        animation: snakePanelIn 0.4s ease forwards;
+      }
+      #snakeOver h3 {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+      }
+      #snakeOver .snake-over__score {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        color: var(--accent-warm);
+        margin-bottom: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+      }
+      @keyframes snakePanelIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: none; }
+      }
 
-      /* HUD */
-      .maze-hud {
+      /* ── Game wrapper ── */
+      #snakeGame { display: none; }
+      #snakeGame.active { display: block; }
+
+      /* ── HUD ── */
+      .snake-hud {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 2rem;
-        margin-bottom: 1rem;
+        gap: 2.5rem;
+        margin-bottom: 0.75rem;
         font-family: var(--font-body);
-        font-size: 0.85rem;
-        letter-spacing: 0.08em;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
         color: var(--ink);
-        opacity: 0.7;
+        opacity: 0.65;
       }
-      .maze-hud__rescued { color: var(--accent-warm); opacity: 1; font-weight: 600; }
+      .snake-hud__val {
+        color: var(--accent-warm);
+        opacity: 1;
+        font-weight: 600;
+        font-size: 1rem;
+      }
 
-      /* Canvas */
-      #mazeCanvas {
+      /* ── Canvas ── */
+      #snakeCanvas {
         display: block;
         margin: 0 auto;
         border: 1px solid rgba(44,44,44,0.15);
@@ -857,26 +424,23 @@
         touch-action: none;
       }
 
-      /* Mobile d-pad */
-      .maze-dpad {
+      /* ── Mobile d-pad ── */
+      .snake-dpad {
         display: none;
-        grid-template-areas:
-          ". up ."
-          "left . right"
-          ". down .";
-        grid-template-columns: repeat(3, 52px);
+        grid-template-areas: ". up ." "left . right" ". down .";
+        grid-template-columns: repeat(3, 54px);
         gap: 6px;
         justify-content: center;
         margin-top: 1.25rem;
       }
-      @media (max-width: 600px) { .maze-dpad { display: grid; } }
-      .dpad-btn {
+      @media (max-width: 600px) { .snake-dpad { display: grid; } }
+      .snake-dpad-btn {
         background: #3D3D3D;
         color: #E8E4DC;
         border: none;
         border-radius: 4px;
-        height: 52px;
-        font-size: 1.2rem;
+        height: 54px;
+        font-size: 1.3rem;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -884,283 +448,303 @@
         transition: background 0.1s;
         -webkit-tap-highlight-color: transparent;
       }
-      .dpad-btn:active { background: var(--accent); }
-      .dpad-btn[data-dir="up"]    { grid-area: up; }
-      .dpad-btn[data-dir="left"]  { grid-area: left; }
-      .dpad-btn[data-dir="right"] { grid-area: right; }
-      .dpad-btn[data-dir="down"]  { grid-area: down; }
-
-      /* Win overlay */
-      #mazeWin {
-        display: none;
-        max-width: 480px;
-        margin: 1.5rem auto 0;
-        background: var(--accent);
-        color: #E8E4DC;
-        padding: 2rem 2.5rem;
-        border-radius: 2px;
-        animation: mazeWinFade 0.5s ease forwards;
-      }
-      @keyframes mazeWinFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-      #mazeWin h3 {
-        font-family: var(--font-display);
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-      }
-      #mazeWin p {
-        font-family: var(--font-body);
-        font-size: 0.9rem;
-        opacity: 0.9;
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-      }
-      #mazeWin button {
-        background: rgba(232,228,220,0.2);
-        border: 1px solid rgba(232,228,220,0.5);
-        color: #E8E4DC;
-        font-family: var(--font-body);
-        font-size: 0.8rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 0.7rem 2rem;
-        cursor: pointer;
-        border-radius: 2px;
-        transition: background 0.2s;
-      }
-      #mazeWin button:hover { background: rgba(232,228,220,0.35); }
+      .snake-dpad-btn:active { background: var(--accent); }
+      .snake-dpad-btn[data-dir="up"]    { grid-area: up; }
+      .snake-dpad-btn[data-dir="left"]  { grid-area: left; }
+      .snake-dpad-btn[data-dir="right"] { grid-area: right; }
+      .snake-dpad-btn[data-dir="down"]  { grid-area: down; }
     </style>
 
-    <h2 class="maze-section__heading reveal">The Forbidden Library</h2>
-    <p class="maze-section__sub reveal">Navigate the maze — rescue 5 books before they burn</p>
+    <h2 class="snake-section__heading reveal">Books Rescued</h2>
+    <p class="snake-section__sub reveal">Collect the books — don't burn yourself</p>
 
     <!-- Intro -->
-    <div id="mazeIntro">
-      <p>Deep in the labyrinth of the censored world, five books wait to be rescued. Find them all before the firemen arrive.</p>
-      <div class="maze-keys">
-        <span class="maze-key">↑ ↓ ← →</span>
-        <span class="maze-key">W A S D</span>
-        <span class="maze-key">Swipe on mobile</span>
+    <div class="snake-panel" id="snakeIntro">
+      <p>The firemen are watching. Slither through the forbidden library and rescue as many books as you can before you run out of room.</p>
+      <div class="snake-keys">
+        <span class="snake-key">↑ ↓ ← →</span>
+        <span class="snake-key">W A S D</span>
+        <span class="snake-key">Swipe on mobile</span>
       </div>
-      <button id="mazeStartBtn">Enter the Maze</button>
+      <button class="snake-btn" id="snakeStartBtn">Start Rescuing</button>
     </div>
 
     <!-- Game -->
-    <div id="mazeGame">
-      <div class="maze-hud">
-        <span>Books rescued: <span class="maze-hud__rescued" id="mazeCount">0</span> / 5</span>
+    <div id="snakeGame">
+      <div class="snake-hud">
+        <span>Books rescued <span class="snake-hud__val" id="snakeScore">0</span></span>
       </div>
-      <canvas id="mazeCanvas" width="475" height="475"></canvas>
-      <div class="maze-dpad">
-        <button class="dpad-btn" data-dir="up">↑</button>
-        <button class="dpad-btn" data-dir="left">←</button>
-        <button class="dpad-btn" data-dir="right">→</button>
-        <button class="dpad-btn" data-dir="down">↓</button>
+      <canvas id="snakeCanvas" width="480" height="480"></canvas>
+      <div class="snake-dpad">
+        <button class="snake-dpad-btn" data-dir="up">↑</button>
+        <button class="snake-dpad-btn" data-dir="left">←</button>
+        <button class="snake-dpad-btn" data-dir="right">→</button>
+        <button class="snake-dpad-btn" data-dir="down">↓</button>
       </div>
     </div>
 
-    <!-- Win -->
-    <div id="mazeWin">
-      <h3>All Books Rescued</h3>
-      <p>"A book is a loaded gun in the house next door. Whoever it was the man found the gun, he could aim it at anyone." You saved them all.</p>
-      <button id="mazeReplayBtn">Play Again</button>
+    <!-- Game Over -->
+    <div class="snake-panel" id="snakeOver">
+      <h3>Burned.</h3>
+      <p class="snake-over__score">Books rescued: <span id="snakeFinalScore">0</span></p>
+      <p>The firemen found you. But the books you saved live on in memory.</p>
+      <button class="snake-btn" id="snakeReplayBtn">Try Again</button>
     </div>
   </section>
 
   <script>
   (function () {
     /* ── Config ── */
-    const COLS = 19, ROWS = 19;
-    const CELL = 25; // px per cell
-    const BOOK_COUNT = 5;
+    const COLS      = 20;
+    const ROWS      = 20;
+    const CELL      = 24;           // grid cell size px
+    const TICK_MS   = 145;          // ms between grid steps
     const COLORS = {
-      wall: '#2C2C2C',
-      path: '#E8E4DC',
-      player: '#C4390F',
-      book: '#F5A623',
-      bookGlow: 'rgba(245,166,35,0.35)',
-      rescued: 'rgba(196,57,15,0.15)',
-      exit: 'rgba(245,166,35,0.5)'
+      bg:      '#E8E4DC',
+      grid:    'rgba(44,44,44,0.05)',
+      snake:   '#C4390F',           // ember-red
+      snakeTip:'#a82e08',           // darker head
+      food:    '#F5A623',           // firelight gold
+      foodGlow:'rgba(245,166,35,0.3)',
     };
 
     /* ── Elements ── */
-    const intro  = document.getElementById('mazeIntro');
-    const game   = document.getElementById('mazeGame');
-    const win    = document.getElementById('mazeWin');
-    const canvas = document.getElementById('mazeCanvas');
-    const ctx    = canvas.getContext('2d');
-    const countEl = document.getElementById('mazeCount');
-    const startBtn  = document.getElementById('mazeStartBtn');
-    const replayBtn = document.getElementById('mazeReplayBtn');
+    const introEl   = document.getElementById('snakeIntro');
+    const gameEl    = document.getElementById('snakeGame');
+    const overEl    = document.getElementById('snakeOver');
+    const canvas    = document.getElementById('snakeCanvas');
+    const ctx       = canvas.getContext('2d');
+    const scoreEl   = document.getElementById('snakeScore');
+    const finalEl   = document.getElementById('snakeFinalScore');
+    const startBtn  = document.getElementById('snakeStartBtn');
+    const replayBtn = document.getElementById('snakeReplayBtn');
 
     /* ── State ── */
-    let maze, player, books, rescued, animFrame;
+    let snake, dir, nextDir, food, score, running;
+    let lastTick = 0;         // timestamp of last grid step
+    let tickT    = 0;         // lerp t [0,1] within current tick
+    let prevHead = null;      // head position before last move (for lerp)
+    let removedTail = null;   // tail segment that just disappeared (fade out)
+    let rafId    = null;
 
-    /* ── Maze generation: recursive backtracker ── */
-    function generateMaze() {
-      // Grid: each cell has walls [N, E, S, W]
-      const grid = Array.from({ length: ROWS }, () =>
-        Array.from({ length: COLS }, () => ({ n: true, e: true, s: true, w: true, visited: false }))
-      );
+    /* ── Helpers ── */
+    function rnd(n) { return Math.floor(Math.random() * n); }
 
-      function carve(r, c) {
-        grid[r][c].visited = true;
-        const dirs = shuffle([
-          { dr: -1, dc: 0, wall: 'n', opp: 's' },
-          { dr:  1, dc: 0, wall: 's', opp: 'n' },
-          { dr:  0, dc: 1, wall: 'e', opp: 'w' },
-          { dr:  0, dc:-1, wall: 'w', opp: 'e' }
-        ]);
-        for (const { dr, dc, wall, opp } of dirs) {
-          const nr = r + dr, nc = c + dc;
-          if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && !grid[nr][nc].visited) {
-            grid[r][c][wall] = false;
-            grid[nr][nc][opp] = false;
-            carve(nr, nc);
-          }
-        }
-      }
-      carve(0, 0);
-      return grid;
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function spawnFood() {
+      let pos;
+      do {
+        pos = { x: rnd(COLS), y: rnd(ROWS) };
+      } while (snake.some(s => s.x === pos.x && s.y === pos.y));
+      food = pos;
     }
 
-    function shuffle(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
     }
 
-    /* Find dead ends (cells with 3 walls) for book placement */
-    function findDeadEnds(grid) {
-      const ends = [];
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          const cell = grid[r][c];
-          const walls = [cell.n, cell.e, cell.s, cell.w].filter(Boolean).length;
-          if (walls === 3 && !(r === 0 && c === 0)) ends.push({ r, c });
-        }
-      }
-      return ends;
-    }
-
+    /* ── Init ── */
     function initGame() {
-      maze  = generateMaze();
-      player = { r: 0, c: 0 };
-      rescued = 0;
-
-      // Place books at dead ends, spread out
-      const deadEnds = shuffle(findDeadEnds(maze));
-      books = deadEnds.slice(0, BOOK_COUNT).map(pos => ({ ...pos, collected: false }));
-
-      if (countEl) countEl.textContent = '0';
-      draw();
+      const mx = Math.floor(COLS / 2);
+      const my = Math.floor(ROWS / 2);
+      snake    = [{ x: mx, y: my }, { x: mx - 1, y: my }, { x: mx - 2, y: my }];
+      dir      = { x: 1, y: 0 };
+      nextDir  = { x: 1, y: 0 };
+      score    = 0;
+      running  = true;
+      prevHead = { ...snake[0] };
+      removedTail = null;
+      lastTick = performance.now();
+      tickT    = 0;
+      if (scoreEl) scoreEl.textContent = '0';
+      spawnFood();
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(loop);
     }
 
-    /* ── Rendering ── */
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    /* ── Tick (grid step) ── */
+    function tick(now) {
+      prevHead = { ...snake[0] };
+      dir = { ...nextDir };
+
+      const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+      // Wall collision
+      if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) {
+        return gameOver();
+      }
+      // Self collision
+      if (snake.some(s => s.x === head.x && s.y === head.y)) {
+        return gameOver();
+      }
+
+      snake.unshift(head);
+
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        if (scoreEl) scoreEl.textContent = score;
+        removedTail = null;
+        spawnFood();
+      } else {
+        removedTail = snake.pop();
+      }
+
+      lastTick = now;
+      tickT    = 0;
+    }
+
+    /* ── Game over ── */
+    function gameOver() {
+      running = false;
+      cancelAnimationFrame(rafId);
+      if (finalEl) finalEl.textContent = score;
+      gameEl.classList.remove('active');
+      gameEl.style.display = 'none';
+      overEl.style.display = 'block';
+      // re-trigger animation
+      overEl.style.animation = 'none';
+      overEl.offsetHeight; // reflow
+      overEl.style.animation = '';
+    }
+
+    /* ── Draw ── */
+    function draw(t) {
+      const W = canvas.width, H = canvas.height;
+      ctx.clearRect(0, 0, W, H);
 
       // Background
-      ctx.fillStyle = COLORS.path;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = COLORS.bg;
+      ctx.fillRect(0, 0, W, H);
 
-      // Draw walls
-      ctx.strokeStyle = COLORS.wall;
-      ctx.lineWidth = 2;
-      ctx.lineCap = 'square';
-
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          const x = c * CELL, y = r * CELL;
-          const cell = maze[r][c];
-          if (cell.n) { ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + CELL, y); ctx.stroke(); }
-          if (cell.e) { ctx.beginPath(); ctx.moveTo(x + CELL, y); ctx.lineTo(x + CELL, y + CELL); ctx.stroke(); }
-          if (cell.s) { ctx.beginPath(); ctx.moveTo(x, y + CELL); ctx.lineTo(x + CELL, y + CELL); ctx.stroke(); }
-          if (cell.w) { ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + CELL); ctx.stroke(); }
-        }
+      // Subtle grid
+      ctx.strokeStyle = COLORS.grid;
+      ctx.lineWidth = 0.5;
+      for (let i = 0; i <= COLS; i++) {
+        ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, H); ctx.stroke();
+      }
+      for (let j = 0; j <= ROWS; j++) {
+        ctx.beginPath(); ctx.moveTo(0, j * CELL); ctx.lineTo(W, j * CELL); ctx.stroke();
       }
 
-      // Draw books
-      for (const book of books) {
-        if (book.collected) continue;
-        const bx = book.c * CELL + CELL / 2;
-        const by = book.r * CELL + CELL / 2;
-        // Glow
-        ctx.fillStyle = COLORS.bookGlow;
-        ctx.beginPath();
-        ctx.arc(bx, by, CELL * 0.55, 0, Math.PI * 2);
+      // Food glow + dot
+      const fx = food.x * CELL + CELL / 2;
+      const fy = food.y * CELL + CELL / 2;
+      const pulse = 0.65 + 0.35 * Math.sin(performance.now() / 320);
+      ctx.fillStyle = COLORS.foodGlow;
+      ctx.beginPath();
+      ctx.arc(fx, fy, CELL * 0.58 * pulse, 0, Math.PI * 2);
+      ctx.fill();
+      // Book icon: gold rect with dark spine
+      const bw = 11, bh = 13;
+      ctx.fillStyle = COLORS.food;
+      roundRect(ctx, fx - bw / 2, fy - bh / 2, bw, bh, 2);
+      ctx.fill();
+      ctx.fillStyle = 'rgba(0,0,0,0.3)';
+      ctx.fillRect(fx - bw / 2, fy - bh / 2, 2.5, bh);
+
+      // Fading removed tail
+      if (removedTail) {
+        const alpha = (1 - t) * 0.7;
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = COLORS.snake;
+        const gap = 2;
+        roundRect(ctx,
+          removedTail.x * CELL + gap,
+          removedTail.y * CELL + gap,
+          CELL - gap * 2,
+          CELL - gap * 2, 4);
         ctx.fill();
-        // Book rect
-        ctx.fillStyle = COLORS.book;
-        ctx.fillRect(bx - 6, by - 7, 12, 14);
-        ctx.fillStyle = 'rgba(0,0,0,0.25)';
-        ctx.fillRect(bx - 6, by - 7, 2, 14);
+        ctx.globalAlpha = 1;
       }
 
-      // Draw player
-      const px = player.c * CELL + CELL / 2;
-      const py = player.r * CELL + CELL / 2;
-      ctx.fillStyle = 'rgba(196,57,15,0.2)';
-      ctx.beginPath();
-      ctx.arc(px, py, CELL * 0.45, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = COLORS.player;
-      ctx.beginPath();
-      ctx.arc(px, py, CELL * 0.28, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    /* ── Movement ── */
-    function move(dir) {
-      const { r, c } = player;
-      const cell = maze[r][c];
-      let nr = r, nc = c;
-
-      if (dir === 'n' && !cell.n) nr--;
-      if (dir === 's' && !cell.s) nr++;
-      if (dir === 'e' && !cell.e) nc++;
-      if (dir === 'w' && !cell.w) nc--;
-
-      if (nr === r && nc === c) return; // hit wall
-
-      player = { r: nr, c: nc };
-      checkBook();
-      draw();
-    }
-
-    function checkBook() {
-      for (const book of books) {
-        if (!book.collected && book.r === player.r && book.c === player.c) {
-          book.collected = true;
-          rescued++;
-          if (countEl) countEl.textContent = rescued;
-          if (rescued === BOOK_COUNT) setTimeout(showWin, 400);
-        }
+      // Snake body (static segments, newest first, skip index 0 = lerped head)
+      for (let i = snake.length - 1; i >= 1; i--) {
+        const seg = snake[i];
+        const ratio = 1 - i / snake.length; // brighter toward head
+        const r = Math.round(196 + (168 - 196) * (1 - ratio));
+        const g = Math.round(57  + (46  - 57)  * (1 - ratio));
+        const b = Math.round(15  + (8   - 15)  * (1 - ratio));
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        const gap = 2;
+        roundRect(ctx,
+          seg.x * CELL + gap,
+          seg.y * CELL + gap,
+          CELL - gap * 2,
+          CELL - gap * 2, 4);
+        ctx.fill();
       }
+
+      // Lerped head
+      const hx = lerp(prevHead.x, snake[0].x, t) * CELL;
+      const hy = lerp(prevHead.y, snake[0].y, t) * CELL;
+      ctx.fillStyle = COLORS.snakeTip;
+      const gap = 1;
+      roundRect(ctx, hx + gap, hy + gap, CELL - gap * 2, CELL - gap * 2, 5);
+      ctx.fill();
+      // Eye
+      const eyeOffX = dir.x * 4 + (dir.y !== 0 ? 4 : 0);
+      const eyeOffY = dir.y * 4 + (dir.x !== 0 ? 4 : 0);
+      ctx.fillStyle = '#E8E4DC';
+      ctx.beginPath();
+      ctx.arc(hx + CELL / 2 + eyeOffX, hy + CELL / 2 + eyeOffY, 2.5, 0, Math.PI * 2);
+      ctx.fill();
     }
 
-    function showWin() {
-      win.style.display = 'block';
+    /* ── RAF loop ── */
+    function loop(now) {
+      if (!running) return;
+      const elapsed = now - lastTick;
+
+      if (elapsed >= TICK_MS) {
+        tick(now);
+        if (!running) return; // game over in tick
+      }
+
+      tickT = Math.min((now - lastTick) / TICK_MS, 1);
+      draw(tickT);
+      rafId = requestAnimationFrame(loop);
     }
 
     /* ── Controls ── */
-    document.addEventListener('keydown', (e) => {
-      if (game.style.display === 'none' && !game.classList.contains('active')) return;
-      const map = {
-        ArrowUp: 'n', ArrowDown: 's', ArrowRight: 'e', ArrowLeft: 'w',
-        w: 'n', s: 's', d: 'e', a: 'w',
-        W: 'n', S: 's', D: 'e', A: 'w'
-      };
-      if (map[e.key]) { e.preventDefault(); move(map[e.key]); }
+    const KEY_MAP = {
+      ArrowUp: { x: 0, y: -1 }, ArrowDown: { x: 0, y: 1 },
+      ArrowLeft: { x: -1, y: 0 }, ArrowRight: { x: 1, y: 0 },
+      w: { x: 0, y: -1 }, s: { x: 0, y: 1 },
+      a: { x: -1, y: 0 }, d: { x: 1, y: 0 },
+      W: { x: 0, y: -1 }, S: { x: 0, y: 1 },
+      A: { x: -1, y: 0 }, D: { x: 1, y: 0 },
+    };
+
+    document.addEventListener('keydown', e => {
+      if (!running) return;
+      const nd = KEY_MAP[e.key];
+      if (!nd) return;
+      // Prevent 180° reversal
+      if (nd.x === -dir.x && nd.y === -dir.y) return;
+      e.preventDefault();
+      nextDir = nd;
     });
 
-    // D-pad buttons
-    document.querySelectorAll('.dpad-btn').forEach(btn => {
+    // D-pad
+    const DPAD_MAP = { up: { x:0,y:-1 }, down: { x:0,y:1 }, left: { x:-1,y:0 }, right: { x:1,y:0 } };
+    document.querySelectorAll('.snake-dpad-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const dirMap = { up: 'n', down: 's', right: 'e', left: 'w' };
-        move(dirMap[btn.dataset.dir]);
+        if (!running) return;
+        const nd = DPAD_MAP[btn.dataset.dir];
+        if (!nd) return;
+        if (nd.x === -dir.x && nd.y === -dir.y) return;
+        nextDir = nd;
       });
     });
 
@@ -1170,28 +754,34 @@
       touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
     }, { passive: true });
     canvas.addEventListener('touchend', e => {
-      if (!touchStart) return;
+      if (!touchStart || !running) return;
       const dx = e.changedTouches[0].clientX - touchStart.x;
       const dy = e.changedTouches[0].clientY - touchStart.y;
       touchStart = null;
-      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+      if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
+      let nd;
       if (Math.abs(dx) > Math.abs(dy)) {
-        move(dx > 0 ? 'e' : 'w');
+        nd = dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 };
       } else {
-        move(dy > 0 ? 's' : 'n');
+        nd = dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 };
       }
+      if (nd.x === -dir.x && nd.y === -dir.y) return;
+      nextDir = nd;
     }, { passive: true });
 
     /* ── Start / Replay ── */
     startBtn.addEventListener('click', () => {
-      intro.style.display = 'none';
-      game.classList.add('active');
-      win.style.display = 'none';
+      introEl.style.display = 'none';
+      overEl.style.display  = 'none';
+      gameEl.style.display  = 'block';
+      gameEl.classList.add('active');
       initGame();
     });
 
     replayBtn.addEventListener('click', () => {
-      win.style.display = 'none';
+      overEl.style.display = 'none';
+      gameEl.style.display = 'block';
+      gameEl.classList.add('active');
       initGame();
     });
   })();
@@ -1226,55 +816,6 @@
   <script src="script.js"></script>
   <script>if (typeof lucide !== 'undefined') lucide.createIcons();</script>
 
-  <script>
-    // ── Book Rescue System ───────────────────────────────────
-    const STORAGE_KEY = 'f451_rescued';
-    const TOTAL_BOOKS = 12;
-
-    function getSaved() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-      catch { return []; }
-    }
-
-    function updateCounter() {
-      const saved = getSaved();
-      const countEl = document.getElementById('rescueCount');
-      const barEl = document.getElementById('rescueBar');
-      if (countEl) countEl.textContent = saved.length;
-      if (barEl) barEl.style.width = (saved.length / TOTAL_BOOKS * 100) + '%';
-    }
-
-    document.querySelectorAll('.book').forEach(card => {
-      const id = card.dataset.bookId;
-      const saved = getSaved();
-      if (saved.includes(id)) {
-        card.classList.add('book--rescued');
-        card.setAttribute('aria-pressed', 'true');
-      }
-
-      card.addEventListener('click', () => {
-        const current = getSaved();
-        const isRescued = card.classList.toggle('book--rescued');
-        card.setAttribute('aria-pressed', String(isRescued));
-        const updated = isRescued
-          ? [...current, id]
-          : current.filter(x => x !== id);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-        updateCounter();
-      });
-
-      card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          card.click();
-        }
-      });
-    });
-
-    updateCounter();
-
-    // Reveals handled by script.js (IntersectionObserver adds .revealed)
-  </script>
 
 </body>
 </html>
